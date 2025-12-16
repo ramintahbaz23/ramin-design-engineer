@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PhotoBoom - Exploding Images
+
+A playful image explosion interaction built with Next.js, TypeScript, Framer Motion, and Tailwind CSS.
+
+## Features
+
+- 🎨 Interactive exploding images on mouse/touch interaction
+- 📱 Fully responsive design
+- ⚡ Built with Next.js 15 and App Router
+- 🎭 Smooth animations with Framer Motion
+- 🎨 Styled with Tailwind CSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Add your images:
+   - Create images in the `public/images/` folder
+   - Name them `image1.jpg`, `image2.jpg`, `image3.jpg`, `image4.jpg` (or update the image paths in `app/page.tsx`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+## Customization
 
-To learn more about Next.js, take a look at the following resources:
+### Adding Your Own Images
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Place your images in `public/images/`
+2. Update the `images` array in `app/page.tsx`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```typescript
+const images = [
+  {
+    id: '1',
+    src: '/images/your-image-1.jpg',
+    alt: 'Description of image 1',
+  },
+  // Add more images...
+];
+```
 
-## Deploy on Vercel
+### Customizing the Layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Edit `app/page.tsx` to change the header, title, and description
+- Modify `components/ExplodingImages.tsx` to adjust animation behavior
+- Update `app/globals.css` for global styling changes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Changing Colors and Styling
+
+The project uses Tailwind CSS. You can customize:
+- Colors in `app/page.tsx` (currently using gray-900 to gray-100 gradient)
+- Component styles in `components/ExplodingImages.tsx`
+- Global styles in `app/globals.css`
+
+## How It Works
+
+- **Hover**: Move your mouse over the image stack to see subtle interactions
+- **Click/Touch**: Click or touch to explode the images outward
+- **Reset**: Press `ESC` key to reset the images back to stacked position
+
+## Project Structure
+
+```
+photoboom/
+├── app/
+│   ├── layout.tsx      # Root layout
+│   ├── page.tsx        # Homepage
+│   └── globals.css     # Global styles
+├── components/
+│   └── ExplodingImages.tsx  # Main interaction component
+├── public/
+│   └── images/         # Your images go here
+└── package.json
+```
+
+## Technologies
+
+- **Next.js 15** - React framework
+- **TypeScript** - Type safety
+- **Framer Motion** - Animation library
+- **Tailwind CSS** - Utility-first CSS framework
+
+## License
+
+Feel free to use this project for your own purposes!

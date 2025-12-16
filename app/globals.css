@@ -14,13 +14,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f3f4f6; /* Keep light background even in dark mode */
+    --foreground: #171717;
   }
 }
 
+html {
+  background: #f3f4f6; /* gray-100 to match page background */
+}
+
 body {
-  background: var(--background);
+  background: #f3f4f6; /* gray-100 to match page background */
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+  margin: 0;
+  padding: 0;
 }
