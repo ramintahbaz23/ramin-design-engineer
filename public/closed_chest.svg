@@ -1,0 +1,19 @@
+<svg width="128" height="78" viewBox="0 0 128 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 0.5H120C124.142 0.5 127.5 3.85786 127.5 8V27.5H0.5V8C0.5 3.85786 3.85786 0.5 8 0.5Z" stroke="black"/>
+<rect x="0.5" y="28.5" width="127" height="49" stroke="black"/>
+<rect x="54.5" y="28.5" width="19" height="13" stroke="black"/>
+<rect x="16" y="77" width="77" height="1" transform="rotate(-90 16 77)" fill="black"/>
+<rect x="111" y="77" width="77" height="1" transform="rotate(-90 111 77)" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="36.5" rx="1" ry="2.5" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+<circle cx="64" cy="32" r="1" fill="black"/>
+</svg>

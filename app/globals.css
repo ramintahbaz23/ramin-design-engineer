@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #e2dedb;
   --foreground: #171717;
 }
 
@@ -20,13 +20,91 @@
 }
 
 html {
-  background: #f3f4f6; /* gray-100 to match page background */
+  background: #e2dedb;
 }
 
 body {
-  background: #f3f4f6; /* gray-100 to match page background */
+  background: #e2dedb;
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
   margin: 0;
   padding: 0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Button housing with 3 layers: outer bezel, inner cavity, button */
+.housing {
+  background: #2A2A2A;
+  position: relative;
+}
+
+/* Layer A - Outer housing (raised bezel) */
+.housing::before {
+  content: '';
+  position: absolute;
+  inset: 28px; /* Thin ring: outer inset 28px */
+  border-radius: 50%;
+  pointer-events: none;
+  /* Raised bezel - subtle top-left highlight + bottom-right shadow */
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    rgba(255, 255, 255, 0.08) 0deg,
+    rgba(255, 255, 255, 0.06) 30deg,
+    rgba(255, 255, 255, 0.03) 60deg,
+    rgba(0, 0, 0, 0.2) 150deg,
+    rgba(0, 0, 0, 0.4) 180deg,
+    rgba(0, 0, 0, 0.2) 210deg,
+    rgba(255, 255, 255, 0.03) 300deg,
+    rgba(255, 255, 255, 0.06) 330deg,
+    rgba(255, 255, 255, 0.08) 360deg
+  );
+  box-shadow: 
+    /* Subtle top-left highlight */
+    -1px -1px 2px rgba(255, 255, 255, 0.08),
+    /* Bottom-right shadow */
+    1px 1px 2px rgba(0, 0, 0, 0.5),
+    /* Crisp dark inner edge separating bezel from cavity */
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.95);
+}
+
+/* Layer B - Inner cavity (recessed well) */
+.housing::after {
+  content: '';
+  position: absolute;
+  inset: 44px; /* Inner inset 44px */
+  border-radius: 50%;
+  pointer-events: none;
+  /* Inner cavity with thin highlight ring at rim - darker towards center */
+  background: radial-gradient(
+    circle at 50% 50%,
+    #181818 0%,
+    #1A1A1A 60%,
+    transparent calc(100% - 2px),
+    rgba(255, 255, 255, 0.05) calc(100% - 2px),
+    rgba(255, 255, 255, 0.03) calc(100% - 1px),
+    transparent 100%
+  );
+  box-shadow: 
+    /* Hard occlusion shadow directly under rim - especially prominent at top/top-left */
+    inset -1px -1px 2px rgba(0, 0, 0, 0.95),
+    inset 0 2px 3px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(0, 0, 0, 0.95),
+    /* Additional depth for recessed well */
+    inset 0 4px 6px rgba(0, 0, 0, 0.85),
+    inset 0 6px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Remove cavity-rim as it's now integrated into ::after */
+.cavity-rim {
+  display: none;
 }

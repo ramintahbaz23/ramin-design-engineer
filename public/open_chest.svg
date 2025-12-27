@@ -1,0 +1,23 @@
+<svg width="128" height="100" viewBox="0 0 128 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 0.5H117C121.142 0.5 124.5 3.85786 124.5 8V19.5H3.5V8C3.5 3.85786 6.85786 0.5 11 0.5Z" stroke="black"/>
+<rect x="0.5" y="50.5" width="127" height="49" stroke="black"/>
+<rect x="54.5" y="50.5" width="19" height="13" stroke="black"/>
+<rect x="16" y="99" width="49" height="1" transform="rotate(-90 16 99)" fill="black"/>
+<rect x="16" y="20" width="19" height="1" transform="rotate(-90 16 20)" fill="black"/>
+<rect x="111" y="20" width="19" height="1" transform="rotate(-90 111 20)" fill="black"/>
+<rect x="111" y="99" width="49" height="1" transform="rotate(-90 111 99)" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<ellipse cx="64" cy="58.5" rx="1" ry="2.5" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<circle cx="64" cy="54" r="1" fill="black"/>
+<line x1="3.48876" y1="19.8946" x2="10.037" y2="50.2499" stroke="black"/>
+<line x1="117.512" y1="50.8899" x2="124.512" y2="19.8899" stroke="black"/>
+</svg>

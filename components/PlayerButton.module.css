@@ -1,0 +1,138 @@
+/* 
+ * 3-Layer Construction:
+ * A) Outer bezel (raised lip) - ::before
+ * B) Inner cavity (recessed well) - ::after
+ * C) Button surface - .btn
+ */
+
+/* Housing container */
+.housing {
+  width: 280px;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 35%, #3b3b3b 0%, #242424 55%, #1a1a1a 100%);
+}
+
+/* Layer A - Outer bezel (raised lip) */
+.housing::before {
+  content: '';
+  position: absolute;
+  inset: 28px; /* Housing thickness - increase = thinner ring, decrease = thicker */
+  border-radius: 999px;
+  pointer-events: none;
+  /* Raised bezel with subtle top-left highlight + bottom-right shadow */
+  background: 
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%),
+    radial-gradient(circle at 50% 90%, rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0) 60%);
+  box-shadow:
+    0 22px 34px rgba(0, 0, 0, 0.65),
+    inset 0 3px 2px rgba(255, 255, 255, 0.16),
+    inset 0 -7px 11px rgba(0, 0, 0, 0.80);
+  
+}
+
+/* Soft moving highlight when playing */
+.housing.playing::before {
+  animation: highlightSweep 4s ease-in-out infinite;
+}
+
+@keyframes highlightSweep {
+  0%, 100% {
+    background: 
+      radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%),
+      radial-gradient(circle at 50% 90%, rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0) 60%);
+  }
+  50% {
+    background: 
+      radial-gradient(circle at 45% 20%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%),
+      radial-gradient(circle at 50% 90%, rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0) 60%);
+  }
+}
+
+/* Layer B - Inner cavity (recessed well) */
+.housing::after {
+  content: '';
+  position: absolute;
+  inset: 44px; /* Cavity opening - increase = smaller cavity, decrease = larger */
+  border-radius: 999px;
+  pointer-events: none;
+  /* Inner cavity with thin highlight ring at rim - darker towards center */
+  background: 
+    radial-gradient(circle, rgba(255, 255, 255, 0.09) 62%, rgba(255, 255, 255, 0) 66%),
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0) 58%);
+  box-shadow:
+    /* Hard occlusion shadow directly under rim - especially prominent at top/top-left */
+    inset 0 16px 10px rgba(0, 0, 0, 0.88), /* Cavity depth - increase opacity = harder occlusion */
+    inset 0 -18px 26px rgba(0, 0, 0, 0.55);
+}
+
+/* Layer C - Button surface */
+.btn {
+  width: 150px;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  border: 0;
+  background: radial-gradient(circle at 50% 30%, #2f2f2f 0%, #1b1b1b 70%, #151515 100%);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.55),
+    inset 0 2px 2px rgba(255, 255, 255, 0.08),
+    inset 0 -12px 18px rgba(0, 0, 0, 0.82);
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Icon container - handles swap between play and pause */
+.icon {
+  position: absolute;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.iconPause {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.btn.playing .iconPlay {
+  opacity: 0;
+}
+
+.btn.playing .iconPause {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Play icon - CSS triangle */
+.iconPlay {
+  width: 0;
+  height: 0;
+  border-left: 58px solid #f2f2f2; /* Triangle width - increase = wider */
+  border-top: 36px solid transparent; /* Triangle height - increase = taller */
+  border-bottom: 36px solid transparent;
+  transform: translateX(6px); /* Slight right offset for visual centering */
+  filter: drop-shadow(0 2px 0 rgba(255, 255, 255, 0.12));
+}
+
+/* Pause icon - CSS bars */
+.iconPause {
+  display: flex;
+  gap: 20px; /* Space between bars - increase = more space */
+  align-items: center;
+  justify-content: center;
+}
+
+.iconPause .bar {
+  width: 18px; /* Bar width - increase = thicker bars */
+  height: 82px; /* Bar height - increase = taller bars */
+  border-radius: 9px;
+  background: #f2f2f2;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+
