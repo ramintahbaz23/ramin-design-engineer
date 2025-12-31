@@ -65,8 +65,8 @@ export default function ProjectPageShell({
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#E2DEDB' }}>
       {/* Header + content wrapper */}
-      <main className={`relative z-10 px-5 sm:px-6 pt-24 sm:pt-32 flex flex-col ${hasChildren ? 'h-[1064px] overflow-visible' : ''} ${hasChildren ? '' : 'pb-28 sm:pb-32'}`}>
-        <div className={`max-w-[680px] mx-auto w-full flex flex-col ${hasChildren ? 'h-full overflow-visible' : ''}`}>
+      <main className={`relative z-10 px-5 sm:px-6 pt-24 sm:pt-32 flex flex-col ${hasChildren ? 'min-h-[1064px]' : ''} ${hasChildren ? '' : 'pb-28 sm:pb-32'}`}>
+        <div className={`max-w-[680px] mx-auto w-full flex flex-col ${hasChildren ? '' : ''}`}>
           {/* Text content section */}
           <div className={`flex flex-col ${hasChildren ? 'pb-7 sm:pb-10' : ''}`}>
             <div className="flex items-start gap-2 sm:gap-3">
@@ -109,9 +109,9 @@ export default function ProjectPageShell({
             </div>
           </div>
 
-          {/* Optional children section for animation/interactive content - fixed 514px height */}
+          {/* Optional children section for animation/interactive content */}
           {children && (
-            <div className="h-[514px] flex items-center justify-center pt-7 sm:pt-10 pb-28 sm:pb-32 overflow-visible w-full">
+            <div className="flex items-start justify-center pt-7 sm:pt-10 pb-28 sm:pb-32 w-full">
               {children}
             </div>
           )}
@@ -120,6 +120,7 @@ export default function ProjectPageShell({
     </div>
   );
 }
+
 
 
 

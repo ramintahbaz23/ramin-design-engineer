@@ -4,8 +4,8 @@ import AnimatedPage from '@/components/AnimatedPage';
 export const essay01Metadata = {
   id: 'essay-01',
   title: "We've been here before",
-  date: 'December 23, 2023',
-  cardDate: 'Dec 2023',
+  date: 'December 2024',
+  cardDate: 'Dec 2024',
   cardDescription: 'Every new form of compute triggers the same fears.',
   href: '/essays/essay-01',
 };
@@ -78,6 +78,7 @@ export default function Essay01() {
     </AnimatedPage>
   );
 }
+
 
 
 

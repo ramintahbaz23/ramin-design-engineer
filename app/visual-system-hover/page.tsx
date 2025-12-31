@@ -31,6 +31,7 @@ type GridItem = {
 export default function VisualSystemHoverPage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const resizeHandleRef = useRef<HTMLDivElement>(null);
   
@@ -38,6 +39,12 @@ export default function VisualSystemHoverPage() {
   const height = useMotionValue(300);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
+  // Set mounted state after component mounts and ensure no initial hover
+  useEffect(() => {
+    setIsMounted(true);
+    setHoveredCard(null); // Explicitly reset hover state on mount
+  }, []);
 
   // Reset position when modal closes
   useEffect(() => {
@@ -155,8 +162,16 @@ export default function VisualSystemHoverPage() {
                   duration: 0.2,
                   ease: 'easeOut',
                 }}
-                onHoverStart={() => setHoveredCard(item.id)}
-                onHoverEnd={() => setHoveredCard(null)}
+                onHoverStart={() => {
+                  if (isMounted) {
+                    setHoveredCard(item.id);
+                  }
+                }}
+                onHoverEnd={() => {
+                  if (isMounted) {
+                    setHoveredCard(null);
+                  }
+                }}
                 onClick={() => setOpenModal(item.id)}
               >
                 {/* Border that appears on hover */}

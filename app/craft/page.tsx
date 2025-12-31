@@ -6,8 +6,11 @@ import Image from 'next/image';
 import AnimatedPage from '@/components/AnimatedPage';
 import { photoboomMetadata } from '@/app/page';
 import { essay01Metadata } from '@/app/essays/essay-01/page';
+import { essay02Metadata } from '@/app/essays/essay-02/page';
 import { paymentStatusMetadata } from '@/app/paymentstatus/page';
 import { visualSystemHoverMetadata } from '@/app/visual-system-hover/page';
+import { keycadetsMetadata } from '@/app/products/keycadets/page';
+import { doritosLoadedMetadata } from '@/app/products/doritos-loaded/page';
 
 type WorkItem = {
   id: string;
@@ -42,6 +45,23 @@ const fragments: WorkItem[] = [
   },
 ];
 
+const products: WorkItem[] = [
+  {
+    id: keycadetsMetadata.id,
+    date: keycadetsMetadata.cardDate,
+    title: keycadetsMetadata.title,
+    description: keycadetsMetadata.cardDescription,
+    href: keycadetsMetadata.href,
+  },
+  {
+    id: doritosLoadedMetadata.id,
+    date: doritosLoadedMetadata.cardDate,
+    title: doritosLoadedMetadata.title,
+    description: doritosLoadedMetadata.cardDescription,
+    href: doritosLoadedMetadata.href,
+  },
+];
+
 const essays: WorkItem[] = [
   {
     id: essay01Metadata.id,
@@ -49,6 +69,13 @@ const essays: WorkItem[] = [
     title: essay01Metadata.title,
     description: essay01Metadata.cardDescription,
     href: essay01Metadata.href,
+  },
+  {
+    id: essay02Metadata.id,
+    date: essay02Metadata.cardDate,
+    title: essay02Metadata.title,
+    description: essay02Metadata.cardDescription,
+    href: essay02Metadata.href,
   },
 ];
 
@@ -179,7 +206,7 @@ export default function CraftPage() {
             </div>
           </motion.section>
 
-          {/* Essays */}
+          {/* Products */}
           <motion.section
             className="mb-10 sm:mb-12"
             variants={sectionVariants}
@@ -196,6 +223,72 @@ export default function CraftPage() {
                 type: 'tween',
                 duration: 1.6,
                 delay: 0.3,
+                ease: [0.22, 1, 0.36, 1],
+              },
+            }}
+          >
+            <div className="flex items-baseline justify-between mb-8 px-3.5 sm:px-4">
+              <h2 className="text-[16px] font-medium text-black">
+                Products
+              </h2>
+            </div>
+
+            <div className="space-y-1.5 sm:space-y-2 max-w-[576px]">
+              {products.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  variants={rowVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{
+                    type: 'tween',
+                    duration: 1.2,
+                    delay: 0.36 + index * 0.12,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="group rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 cursor-pointer bg-transparent hover:bg-[#E0DCD7] border border-transparent hover:border-[#D0CECA] shadow-none hover:shadow-sm transition-all duration-200"
+                >
+                  <Link
+                    href={item.href ?? '#'}
+                    className="flex items-start gap-6 w-full"
+                    aria-label={item.title}
+                  >
+                    {item.date && (
+                      <p className="text-[13px] sm:text-[14px] text-gray-500 min-w-[72px]">
+                        {item.date}
+                      </p>
+                    )}
+                    <div className="flex-1">
+                      <p className="text-[16px] font-medium text-gray-900">
+                        {item.title}
+                      </p>
+                      <p className="text-[14px] sm:text-[15px] text-gray-600 mt-0.5">
+                        {item.description}
+                      </p>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Essays */}
+          <motion.section
+            className="mb-10 sm:mb-12"
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{
+              opacity: {
+                type: 'tween',
+                duration: 1.1,
+                delay: 0.38,
+                ease: [0.22, 1, 0.36, 1],
+              },
+              filter: {
+                type: 'tween',
+                duration: 1.6,
+                delay: 0.38,
                 ease: [0.22, 1, 0.36, 1],
               },
             }}
@@ -276,9 +369,9 @@ export default function CraftPage() {
                 If you're interested in exploring specific examples of my work, design process, or problem-solving approaches, please{' '}
                 <Link
                   href="/elsewhere"
-                  className="underline-offset-2 hover:underline"
+                  className="underline underline-offset-2"
                 >
-                  connect
+                  reach out
                 </Link>
                 .
               </p>
