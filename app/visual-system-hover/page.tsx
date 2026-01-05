@@ -138,7 +138,7 @@ export default function VisualSystemHoverPage() {
         }}
       >
         {/* Grid - 2 columns, 3 rows */}
-        <div className="mt-2 sm:mt-4 w-full max-w-full">
+        <div className="w-full max-w-full">
           <div className="grid grid-cols-2 gap-1 w-full" style={{ gridAutoRows: 'minmax(70px, auto)' }}>
             {gridItems.map((item, index) => {
               // Determine if card is on left (even index) or right (odd index)

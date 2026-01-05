@@ -198,3 +198,9 @@ export function getRelatedGear(currentSlug: string, limit: number = 4): GearItem
     .slice(0, limit);
 }
 
+
+
+
+
+
+

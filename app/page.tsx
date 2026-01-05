@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import AnimatedPage from '@/components/AnimatedPage';
 
@@ -24,19 +26,19 @@ export default function Home() {
               </h1>
               <div className="text-[16px] sm:text-[17px] text-gray-700 leading-relaxed space-y-3 sm:space-y-4">
                 <p>
-                  I solve problems by telling stories—whether through product, film, or something you can hold in your hands. Design is how I make sense of the world and connect people to what matters.
+                  I create across product, film, hardware, and writing. This is where I share the work and what I&apos;m learning along the way.
                 </p>
                 <p>
-                  Currently building experiences in the space between craft and computation at{' '}
+                  Currently head of design at{' '}
                   <Link
                     href="https://joinpromise.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline-offset-2 hover:underline"
+                    className="underline sm:no-underline hover:underline underline-offset-2"
                   >
                     Promise
                   </Link>
-                  .
+                  , designing intelligent systems that work for people.
                 </p>
               </div>
             </div>

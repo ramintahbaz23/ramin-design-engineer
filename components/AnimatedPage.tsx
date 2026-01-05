@@ -60,6 +60,7 @@ export default function AnimatedPage({ children, className, variant = 'default' 
   return (
     <motion.div
       className={className}
+      style={{ overflow: 'visible', overflowY: 'visible' }}
       initial={config.initial}
       animate={config.animate}
       transition={config.transition}
@@ -68,6 +69,10 @@ export default function AnimatedPage({ children, className, variant = 'default' 
     </motion.div>
   );
 }
+
+
+
+
 
 
 

@@ -38,10 +38,19 @@ export default function PaymentStatusPage() {
           text: paymentStatusMetadata.shareText,
         }}
       >
-        <Music />
+        <div className="pt-8 sm:pt-0">
+          <Music />
+        </div>
       </ProjectPageShell>
     </AnimatedPage>
   );
 }
+
+
+
+
+
+
+
 
 

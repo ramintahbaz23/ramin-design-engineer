@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 type ShareConfig = {
@@ -28,6 +29,14 @@ export default function ProjectPageShell({
   shareConfig,
   children,
 }: ProjectPageShellProps) {
+  const router = useRouter();
+
+  const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If going back to craft page, save current scroll position (though we're leaving, not coming back)
+    // Actually, we want to restore the saved position, so we don't need to save here
+    // The craft page will restore it on mount
+  };
+
   const handleShare = async () => {
     if (!shareConfig) return;
 
@@ -63,16 +72,17 @@ export default function ProjectPageShell({
   const hasChildren = Boolean(children);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#E2DEDB' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#E2DEDB', overflowX: 'hidden', overflowY: 'visible' }}>
       {/* Header + content wrapper */}
-      <main className={`relative z-10 px-5 sm:px-6 pt-24 sm:pt-32 flex flex-col ${hasChildren ? 'min-h-[1064px]' : ''} ${hasChildren ? '' : 'pb-28 sm:pb-32'}`}>
-        <div className={`max-w-[680px] mx-auto w-full flex flex-col ${hasChildren ? '' : ''}`}>
+      <main className={`relative z-10 px-5 sm:px-6 pt-24 sm:pt-32 flex flex-col ${hasChildren ? 'min-h-[1064px]' : ''} ${hasChildren ? '' : 'pb-28 sm:pb-32'}`} style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible' }}>
+        <div className={`max-w-[680px] mx-auto w-full flex flex-col ${hasChildren ? '' : ''}`} style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible' }}>
           {/* Text content section */}
-          <div className={`flex flex-col ${hasChildren ? 'pb-7 sm:pb-10' : ''}`}>
+          <div className={`flex flex-col ${hasChildren ? 'pb-6 sm:pb-0' : ''}`} style={{ overflowX: 'visible' }}>
             <div className="flex items-start gap-2 sm:gap-3">
               {/* Back button – desktop only */}
               <Link
                 href={backHref}
+                onClick={handleBackClick}
                 className="hidden sm:inline-flex items-center gap-1.5 -translate-x-10 sm:-translate-x-12 translate-y-[2px] sm:translate-y-[4px] text-[14px] font-medium text-gray-700 hover:text-gray-900 transition-colors cursor-pointer"
                 aria-label="Back"
               >
@@ -93,25 +103,26 @@ export default function ProjectPageShell({
               {/* Content column with title, date, and body */}
               <div className="max-w-[560px] flex-1">
                 <div className="mb-0.5">
-                  <h1 className="text-[18px] font-bold text-gray-900">
-                    {title}
+                  <h1 className="text-[18px] font-bold text-gray-900" style={{ color: '#111827' }}>
+                    {title || 'Photo boom'}
                   </h1>
                 </div>
 
-                <p className="text-[16px] text-gray-600 mb-4 sm:mb-6">
-                  {date}
+                <p className="text-[16px] text-gray-600 mb-4 sm:mb-6" style={{ color: '#4B5563' }}>
+                  {date || 'March 23, 2025'}
                 </p>
 
-                <div className="space-y-4 sm:space-y-6 text-[18px] text-gray-800 leading-[1.65] sm:leading-[1.5] w-full">
+                <div className="text-[18px] text-gray-800 leading-[1.65] sm:leading-[1.5] w-full [&_p:not(:first-child)]:mt-4 [&_p:not(:first-child)]:sm:mt-6">
                   {description}
                 </div>
+                {hasChildren && <div className="h-4 sm:h-0" />}
               </div>
             </div>
           </div>
 
           {/* Optional children section for animation/interactive content */}
           {children && (
-            <div className="flex items-start justify-center pt-7 sm:pt-10 pb-28 sm:pb-32 w-full">
+            <div className="flex items-start justify-center pt-6 sm:pt-0 pb-28 sm:pb-32 w-full" style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible', position: 'relative', zIndex: 1, marginTop: '-16px' }}>
               {children}
             </div>
           )}
