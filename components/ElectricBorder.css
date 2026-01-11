@@ -296,12 +296,6 @@
   padding-bottom: 300px; /* Extra space for config panel when open */
 }
 
-@media (max-width: 767px) {
-  .electric-border-wrapper {
-    display: none;
-  }
-}
-
 .card-container-wrapper {
   position: relative;
 }

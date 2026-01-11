@@ -208,8 +208,8 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[70vh] sm:h-[60vh] flex items-center justify-center"
-      style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible', minHeight: isMobile ? '500px' : 'auto' }}
+      className="relative w-full h-[70vh] sm:h-[60vh] flex items-center justify-center -mt-12 sm:mt-0"
+      style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible', minHeight: isMobile ? '400px' : 'auto' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

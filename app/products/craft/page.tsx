@@ -39,7 +39,7 @@ export default function CraftPage() {
         extraSpacing={{ mobile: -64, desktop: 0 }}
       >
         {/* Single Image */}
-        <div className="mt-0 sm:mt-16 w-full max-w-full">
+        <div className="-mt-16 sm:mt-16 w-full max-w-full">
           <div className="relative w-full rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 200px)', minHeight: '800px', backgroundColor: '#E2DEDB' }}>
             <Image
               src="/images/craft/Craft_new.png"
