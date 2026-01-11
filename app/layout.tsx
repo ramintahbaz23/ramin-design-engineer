@@ -27,14 +27,11 @@ export const metadata: Metadata = {
   themeColor: "#E2DEDB",
 };
 
-// Type that explicitly excludes params to prevent serialization issues
-type LayoutProps = {
+export default async function RootLayout({
+  children,
+}: {
   children: React.ReactNode;
-} & {
-  params?: never; // Explicitly mark params as never to prevent it from being in props
-};
-
-export default async function RootLayout({ children }: LayoutProps) {
+}) {
   return (
     <html lang="en">
       <body
