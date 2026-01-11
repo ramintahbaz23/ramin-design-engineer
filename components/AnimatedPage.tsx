@@ -35,7 +35,7 @@ export default function AnimatedPage({ children, className, variant = 'default' 
       transition: {
         duration: 1.0,
         delay: 0.06,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
         opacity: { times: [0, 0.5, 1] },
         y: { times: [0, 0.65, 1] },
         filter: { times: [0, 0.65, 1] },
@@ -47,7 +47,7 @@ export default function AnimatedPage({ children, className, variant = 'default' 
       animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
       transition: {
         delay: 0.08,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
         opacity: { duration: 0.9 },
         y: { duration: 1.2 },
         filter: { duration: 1.4 },
