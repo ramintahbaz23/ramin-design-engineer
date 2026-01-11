@@ -8,7 +8,7 @@ export const film05Metadata = {
   id: 'film-05',
   title: 'The Zeke Sanders Story',
   date: 'June 2021',
-  cardDate: 'June 2021',
+  cardDate: 'Jun 2021',
   cardDescription: "The peaks and valleys of a young man's journey to make his first film.",
   href: '/films/film-05',
   shareTitle: 'The Zeke Sanders Story — Ramin — Design Engineer',

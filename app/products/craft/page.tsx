@@ -7,8 +7,8 @@ import ProjectPageShell from '@/components/ProjectPageShell';
 export const craftMetadata = {
   id: 'craft',
   title: 'Craft',
-  date: 'December 2025',
-  cardDate: 'Dec 2025',
+  date: 'July 2025',
+  cardDate: 'Jul 2025',
   cardDescription: 'Product description',
   href: '/products/craft',
   shareTitle: 'Craft — Ramin — Design Engineer',
@@ -36,11 +36,11 @@ export default function CraftPage() {
           title: craftMetadata.shareTitle,
           text: craftMetadata.shareText,
         }}
-        extraSpacing={{ mobile: -80, desktop: 0 }}
+        extraSpacing={{ mobile: -64, desktop: 0 }}
       >
         {/* Single Image */}
-        <div className="-mt-12 sm:mt-16 w-full max-w-full">
-          <div className="relative w-full rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 200px)', minHeight: '800px', backgroundColor: '#E2DEDB' }}>
+        <div className="mt-4 sm:mt-16 w-full max-w-full -mx-4 sm:mx-0">
+          <div className="relative w-full rounded-lg overflow-hidden min-h-[500px] sm:min-h-[800px]" style={{ maxHeight: 'calc(100vh - 200px)', backgroundColor: '#E2DEDB' }}>
             <Image
               src="/images/craft/Craft_new.png"
               alt="Craft"

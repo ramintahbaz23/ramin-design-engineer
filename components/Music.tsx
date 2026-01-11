@@ -25,7 +25,7 @@ function useInterval(callback: () => void, delay: number | null) {
 export default function Music() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div className="flex w-full max-w-md items-center justify-center">
+      <div className="flex w-full max-w-md items-center justify-center pt-8">
         <PaymentStatusButton />
       </div>
     </div>

@@ -31,6 +31,7 @@ export default function KeycadetsPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const updateIsMobile = () => {
@@ -133,9 +134,39 @@ export default function KeycadetsPage() {
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (isTransitioning) return;
-    e.stopPropagation();
     const touch = e.touches[0];
-    const rect = e.currentTarget.getBoundingClientRect();
+    if (!touch) return;
+    
+    // Store the initial touch position to detect scroll vs tap
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isTransitioning || !touchStartRef.current || !imageContainerRef.current) return;
+    
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+
+    // Calculate the distance moved during the touch
+    const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+    const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+    const totalMovement = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    // If movement is more than 10px, it's likely a scroll, not a tap
+    // Only trigger carousel navigation on intentional taps (small movement)
+    const isTap = totalMovement < 10;
+    
+    if (!isTap) {
+      // This was a scroll, not a tap - don't trigger carousel navigation
+      touchStartRef.current = null;
+      return;
+    }
+
+    e.stopPropagation();
+    const rect = imageContainerRef.current.getBoundingClientRect();
     const x = touch.clientX - rect.left;
     const width = rect.width;
     const midpoint = width / 2;
@@ -157,6 +188,7 @@ export default function KeycadetsPage() {
     }
     
     setTimeout(() => setIsTransitioning(false), 300);
+    touchStartRef.current = null;
   };
 
   const getCursorClass = () => {
@@ -215,6 +247,7 @@ export default function KeycadetsPage() {
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
             onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.div

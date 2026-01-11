@@ -19,8 +19,10 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false); // Track if user has interacted
   const containerRef = useRef<HTMLDivElement>(null);
   const explosionOriginRef = useRef({ x: 0, y: 0 });
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (exploded) return;
@@ -53,16 +55,23 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
 
     explosionOriginRef.current = { x, y };
     setMousePosition({ x, y });
+    setHasInteracted(true); // Mark that user has interacted
     setExploded(!exploded);
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
     const touch = e.touches[0];
     if (!touch) return;
     
+    // Store the initial touch position to detect scroll vs tap
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+
+    const rect = containerRef.current.getBoundingClientRect();
     const x = touch.clientX - rect.left;
     const y = touch.clientY - rect.top;
 
@@ -71,53 +80,76 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !touchStartRef.current) return;
+
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+
+    // Calculate the distance moved during the touch
+    const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
+    const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+    const totalMovement = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    // If movement is more than 10px, it's likely a scroll, not a tap
+    // Only trigger explosion on intentional taps (small movement)
+    const isTap = totalMovement < 10;
+    
+    if (!isTap) {
+      // This was a scroll, not a tap - don't trigger explosion
+      touchStartRef.current = null;
+      return;
+    }
 
     // Prevent click event from firing on mobile
     e.preventDefault();
     e.stopPropagation();
 
     const rect = containerRef.current.getBoundingClientRect();
-    const touch = e.changedTouches[0];
-    if (!touch) return;
-    
     const x = touch.clientX - rect.left;
     const y = touch.clientY - rect.top;
 
     explosionOriginRef.current = { x, y };
     setMousePosition({ x, y });
+    setHasInteracted(true); // Mark that user has interacted
     // Toggle exploded state on mobile - tap to explode, tap again to return
     setExploded(!exploded);
+    
+    touchStartRef.current = null;
   };
 
   const getExplodedPosition = (index: number, total: number, imageWidth: number) => {
     if (isMobile) {
       // Mobile: use fixed pixel offsets that work reliably across devices
       // Images are positioned at 50%, 50% (center), so transforms are relative to center
-      const offsetX = 60; // Horizontal spread (reduced from 80 to keep on screen)
-      const offsetY = 60; // Vertical spread (reduced from 80 to keep on screen)
-      const leftShift = -70; // Shift entire group left to center better on screen (reduced from -90)
+      const offsetX = 60; // Horizontal spread
+      const offsetY = 60; // Vertical spread
+      // Calculate center shift: account for image width and scale to properly center the group
+      // On mobile, images are min(200px, 40vw), typically around 150px on mobile
+      // When scaled to 1.12, that's ~168px wide. The rightmost image at +60px extends to +60 + 84 = 144px
+      // The leftmost at -60px extends to -60 - 84 = -144px
+      // To center, we need to shift left by about half the visual width difference
+      // Since images are rotated and spread, we need a larger shift to visually center
+      const centerShift = -84; // Shift left to center the exploded group (adjusted 4px left)
       
       // Corner positions: top-left, top-right, bottom-left, bottom-right
-      // Add leftShift to all X positions to move the group left
       const corners = [
         { 
-          x: -offsetX + leftShift, 
+          x: -offsetX + centerShift, 
           y: -offsetY,
           rotation: -10
         },
         { 
-          x: offsetX + leftShift, 
+          x: offsetX + centerShift, 
           y: -offsetY,
           rotation: 10
         },
         { 
-          x: -offsetX + leftShift, 
+          x: -offsetX + centerShift, 
           y: offsetY,
           rotation: -10
         },
         { 
-          x: offsetX + leftShift, 
+          x: offsetX + centerShift, 
           y: offsetY,
           rotation: 10
         },
@@ -131,7 +163,7 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
     const overlap = 40; // Amount of overlap between images (was 60)
     const spacing = imageWidth - overlap; // Spacing between image centers
     const totalWidth = (total - 1) * spacing; // Total width of the group
-    const startX = -totalWidth / 2; // Start position to center the group
+    const startX = -totalWidth / 2 - 4; // Start position to center the group (shifted 4px left)
     
     // Add slight vertical variation for natural scattered look (a touch stronger when exploded)
     const verticalVariation = [-22, 14, -12, 20, -18];
@@ -150,8 +182,9 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
 
   const getPeekOffset = (index: number, total: number) => {
     // Apply subtle movement to all images in different directions
-    // On mobile, always show peek effect when not exploded (like desktop hover)
+    // On mobile, always show peek effect when not exploded (like before)
     // On desktop, only show when hovering
+    // The explosion animation is what requires interaction, not the peek
     if (exploded) return { x: 0, y: 0 };
     if (!isMobile && !isHovering) return { x: 0, y: 0 };
     
@@ -247,10 +280,13 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
           } else {
             // When stacked, images are centered, transform relative to center
             // baseOffset creates the stacked effect (negative values move up/left)
+            // The -100 centers them horizontally (half of 200px width)
             // The -125 centers them vertically (half of 250px height)
-            targetX = baseOffset + peekOffset.x - 100; // -100 to account for half width (200/2)
-            targetY = baseOffset + peekOffset.y - 125; // -125 to account for half height (250/2)
-            // On mobile, always show tilt (like desktop hover). On desktop, only when hovering
+            // On mobile, always show peek and tilt (like before)
+            // On desktop, only show peek and tilt when hovering
+            targetX = baseOffset + peekOffset.x - 100;
+            targetY = baseOffset + peekOffset.y - 125;
+            // On mobile, always show tilt. On desktop, only when hovering
             const shouldShowTilt = isMobile || isHovering;
             const tiltAmount = shouldShowTilt ? (index < 2 ? -8 : 8) : 0;
             targetRotate = index * 1.5 + tiltAmount;

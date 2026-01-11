@@ -145,6 +145,7 @@ export default function CarouselPage() {
               marginLeft: '-120px',
               paddingRight: '120px',
               marginRight: '-120px',
+              touchAction: isMobile ? 'pan-x pan-y' : 'auto', // Allow both horizontal and vertical scrolling on mobile
             }}
             onWheel={(e) => {
               if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
@@ -159,19 +160,44 @@ export default function CarouselPage() {
             onTouchStart={(e) => {
               const touch = e.touches[0];
               const startX = touch.clientX;
+              const startY = touch.clientY;
               const startScrollLeft = scrollLeft;
+              let isHorizontalScroll = false;
+              let hasMoved = false;
               
               const handleTouchMove = (moveEvent: TouchEvent) => {
                 const moveTouch = moveEvent.touches[0];
                 const deltaX = moveTouch.clientX - startX;
+                const deltaY = moveTouch.clientY - startY;
+                const absDeltaX = Math.abs(deltaX);
+                const absDeltaY = Math.abs(deltaY);
                 
-                if (Math.abs(deltaX) > 5) {
+                // Only proceed if there's been some movement
+                if (absDeltaX < 5 && absDeltaY < 5) {
+                  return;
+                }
+                
+                hasMoved = true;
+                
+                // Determine if this is primarily a horizontal scroll
+                // Require horizontal movement to be at least 1.5x greater than vertical movement
+                // and at least 15px to avoid accidental triggers
+                if (!isHorizontalScroll && absDeltaX > absDeltaY * 1.5 && absDeltaX > 15) {
+                  isHorizontalScroll = true;
+                }
+                
+                // Only trigger horizontal scroll if it's clearly a horizontal gesture
+                // If vertical movement is dominant, don't interfere with page scrolling
+                if (isHorizontalScroll) {
                   moveEvent.preventDefault();
                   const containerWidth = scrollContainerRef.current?.scrollWidth || 0;
                   const wrapperWidth = scrollWrapperRef.current?.clientWidth || 0;
                   const maxScroll = Math.max(0, containerWidth - wrapperWidth + 240);
                   const newScroll = Math.max(0, Math.min(maxScroll, startScrollLeft - deltaX));
                   setScrollLeft(newScroll);
+                } else if (absDeltaY > absDeltaX * 1.5 && absDeltaY > 15) {
+                  // This is clearly a vertical scroll - don't prevent default, let page scroll
+                  return;
                 }
               };
               

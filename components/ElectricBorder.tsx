@@ -35,6 +35,7 @@ export default function ElectricBorder() {
   useEffect(() => {
     const updateFilter = (filter: SVGFilterElement | null) => {
       if (filter) {
+        // Query all animate elements - try both direct and nested queries
         const animates = filter.querySelectorAll('animate');
         if (animates.length >= 4) {
           // Update dur attributes for all animations
@@ -52,10 +53,21 @@ export default function ElectricBorder() {
       }
     };
     
-    // Update both desktop and mobile filters
-    updateFilter(filterRef.current);
-    updateFilter(mobileFilterRef.current);
-  }, [speed]);
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      // Update both desktop and mobile filters
+      updateFilter(filterRef.current);
+      updateFilter(mobileFilterRef.current);
+      
+      // Also try querying by ID as fallback for mobile
+      if (isMobile) {
+        const mobileFilterById = document.getElementById('ramin-electric-displace-mobile') as SVGFilterElement;
+        if (mobileFilterById) {
+          updateFilter(mobileFilterById);
+        }
+      }
+    });
+  }, [speed, isMobile]);
 
   // Update chaos (displacement scale) via DOM manipulation
   useEffect(() => {
@@ -68,10 +80,21 @@ export default function ElectricBorder() {
       }
     };
     
-    // Update both desktop and mobile filters
-    updateFilter(filterRef.current);
-    updateFilter(mobileFilterRef.current);
-  }, [chaos]);
+    // Use requestAnimationFrame to ensure DOM is ready
+    requestAnimationFrame(() => {
+      // Update both desktop and mobile filters
+      updateFilter(filterRef.current);
+      updateFilter(mobileFilterRef.current);
+      
+      // Also try querying by ID as fallback for mobile
+      if (isMobile) {
+        const mobileFilterById = document.getElementById('ramin-electric-displace-mobile') as SVGFilterElement;
+        if (mobileFilterById) {
+          updateFilter(mobileFilterById);
+        }
+      }
+    });
+  }, [chaos, isMobile]);
 
   return (
     <div className="electric-border-wrapper">
@@ -143,7 +166,7 @@ export default function ElectricBorder() {
                 yChannelSelector="B" 
               />
             </filter>
-            {/* Mobile filter - smoother with lower numOctaves but same animation values as desktop for consistent speed */}
+            {/* Mobile filter - smoother with lower numOctaves and reduced animation values */}
             <filter 
               ref={mobileFilterRef}
               id="ramin-electric-displace-mobile" 
@@ -157,7 +180,7 @@ export default function ElectricBorder() {
               <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
                 <animate 
                   attributeName="dy" 
-                  values="650; 0" 
+                  values="300; 0" 
                   dur="6s" 
                   repeatCount="indefinite" 
                   calcMode="linear" 
@@ -168,7 +191,7 @@ export default function ElectricBorder() {
               <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
                 <animate 
                   attributeName="dy" 
-                  values="0; -650" 
+                  values="0; -300" 
                   dur="6s" 
                   repeatCount="indefinite" 
                   calcMode="linear" 
@@ -179,7 +202,7 @@ export default function ElectricBorder() {
               <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
                 <animate 
                   attributeName="dx" 
-                  values="520; 0" 
+                  values="250; 0" 
                   dur="6s" 
                   repeatCount="indefinite" 
                   calcMode="linear" 
@@ -190,7 +213,7 @@ export default function ElectricBorder() {
               <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
                 <animate 
                   attributeName="dx" 
-                  values="0; -520" 
+                  values="0; -250" 
                   dur="6s" 
                   repeatCount="indefinite" 
                   calcMode="linear" 

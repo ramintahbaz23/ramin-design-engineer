@@ -7,8 +7,8 @@ import ProjectPageShell from '@/components/ProjectPageShell';
 export const sunsetMetadata = {
   id: 'sunset',
   title: 'Sunset Chaser',
-  date: 'July 2025',
-  cardDate: 'July 2025',
+  date: 'December 2025',
+  cardDate: 'Dec 2025',
   cardDescription: 'A location-aware concept that notifies users before sunset.',
   href: '/products/sunset',
   shareTitle: 'Sunset Chaser — Ramin — Design Engineer',
