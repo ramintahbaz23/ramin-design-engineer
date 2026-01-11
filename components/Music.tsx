@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 // Custom interval hook
 function useInterval(callback: () => void, delay: number | null) {
-  const savedCallback = useRef<() => void>();
+  const savedCallback = useRef<(() => void) | undefined>(undefined);
 
   useEffect(() => {
     savedCallback.current = callback;

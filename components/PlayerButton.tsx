@@ -97,7 +97,7 @@ export default function PlayerButton() {
       y: -1,
       scale: 1.01,
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 400,
         damping: 17,
       },
@@ -107,7 +107,7 @@ export default function PlayerButton() {
       scale: 0.98,
       boxShadow: 'inset 0 4px 4px rgba(0, 0, 0, 0.5), inset 0 -8px 12px rgba(0, 0, 0, 0.9)',
       transition: {
-        type: 'spring',
+        type: 'spring' as const,
         stiffness: 500,
         damping: 20,
       },
