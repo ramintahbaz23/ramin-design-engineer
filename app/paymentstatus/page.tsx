@@ -37,7 +37,7 @@ export default function PaymentStatusPage() {
           title: paymentStatusMetadata.shareTitle,
           text: paymentStatusMetadata.shareText,
         }}
-        extraSpacing={{ mobile: -16, desktop: 160 }}
+        extraSpacing={{ mobile: 0, desktop: 160 }}
       >
         <Music />
       </ProjectPageShell>

@@ -28,12 +28,8 @@ export default function CarouselPage() {
   const [cardWidth, setCardWidth] = useState(240);
   const [isMobile, setIsMobile] = useState(false);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
-  const touchStartRef = useRef<{ x: number; scrollLeft: number; time: number } | null>(null);
-  const velocityRef = useRef(0);
-  const animationFrameRef = useRef<number | null>(null);
 
   // Responsive card sizing
   useEffect(() => {
@@ -164,37 +160,12 @@ export default function CarouselPage() {
               const touch = e.touches[0];
               const startX = touch.clientX;
               const startScrollLeft = scrollLeft;
-              const startTime = Date.now();
-              
-              touchStartRef.current = { x: startX, scrollLeft: startScrollLeft, time: startTime };
-              velocityRef.current = 0;
-              setIsDragging(true);
-              
-              // Cancel any ongoing momentum scroll
-              if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-                animationFrameRef.current = null;
-              }
-              
-              let lastX = startX;
-              let lastTime = startTime;
-              let lastDeltaX = 0;
               
               const handleTouchMove = (moveEvent: TouchEvent) => {
                 const moveTouch = moveEvent.touches[0];
-                const currentX = moveTouch.clientX;
-                const currentTime = Date.now();
-                const deltaX = currentX - startX;
-                const deltaTime = currentTime - lastTime;
+                const deltaX = moveTouch.clientX - startX;
                 
-                // Calculate velocity for momentum
-                if (deltaTime > 0) {
-                  const instantVelocity = (currentX - lastX) / deltaTime;
-                  velocityRef.current = instantVelocity * 0.3 + velocityRef.current * 0.7; // Smooth velocity
-                }
-                
-                // Start scrolling immediately with lower threshold
-                if (Math.abs(deltaX) > 1) {
+                if (Math.abs(deltaX) > 5) {
                   moveEvent.preventDefault();
                   const containerWidth = scrollContainerRef.current?.scrollWidth || 0;
                   const wrapperWidth = scrollWrapperRef.current?.clientWidth || 0;
@@ -202,45 +173,11 @@ export default function CarouselPage() {
                   const newScroll = Math.max(0, Math.min(maxScroll, startScrollLeft - deltaX));
                   setScrollLeft(newScroll);
                 }
-                
-                lastX = currentX;
-                lastTime = currentTime;
-                lastDeltaX = deltaX;
               };
               
               const handleTouchEnd = () => {
                 document.removeEventListener('touchmove', handleTouchMove);
                 document.removeEventListener('touchend', handleTouchEnd);
-                
-                setIsDragging(false);
-                
-                // Apply momentum scrolling
-                if (Math.abs(velocityRef.current) > 0.1) {
-                  const containerWidth = scrollContainerRef.current?.scrollWidth || 0;
-                  const wrapperWidth = scrollWrapperRef.current?.clientWidth || 0;
-                  const maxScroll = Math.max(0, containerWidth - wrapperWidth + 240);
-                  
-                  let currentVelocity = -velocityRef.current * 0.5; // Convert to scroll velocity and reduce
-                  let currentScroll = scrollLeft;
-                  const friction = 0.92; // Friction coefficient
-                  
-                  const animate = () => {
-                    if (Math.abs(currentVelocity) < 0.1) {
-                      animationFrameRef.current = null;
-                      return;
-                    }
-                    
-                    currentScroll = Math.max(0, Math.min(maxScroll, currentScroll + currentVelocity));
-                    currentVelocity *= friction;
-                    
-                    setScrollLeft(currentScroll);
-                    animationFrameRef.current = requestAnimationFrame(animate);
-                  };
-                  
-                  animationFrameRef.current = requestAnimationFrame(animate);
-                }
-                
-                touchStartRef.current = null;
               };
               
               document.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -255,7 +192,7 @@ export default function CarouselPage() {
                 width: `${carouselImages.length * (cardWidth + cardGap)}px`,
                 minWidth: '100%',
                 transform: `translateX(${120 - scrollLeft}px)`,
-                transition: isMobile && !isDragging ? 'transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none',
+                transition: 'transform 0.1s ease-out',
               }}
             >
               {carouselImages.map((card, index) => {

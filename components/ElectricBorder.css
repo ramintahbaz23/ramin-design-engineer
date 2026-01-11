@@ -74,14 +74,6 @@
     aspect-ratio: 0.7;
     min-height: 400px;
   }
-  
-  .background-glow {
-    filter: blur(16px) !important; /* Reduce blur on mobile */
-  }
-  
-  .card-container {
-    contain: layout style paint; /* Isolate rendering */
-  }
 }
 
 .glow-layer-1 {
