@@ -63,7 +63,8 @@
   filter: url(#ramin-electric-displace);
   will-change: filter;
   transform: translateZ(0); /* Force GPU acceleration */
-  contain: layout style paint; /* Isolate rendering for better performance */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 @media (max-width: 767px) {
@@ -73,6 +74,13 @@
     height: auto;
     aspect-ratio: 0.7;
     min-height: 400px;
+    /* Use smoother mobile filter */
+    filter: url(#ramin-electric-displace-mobile);
+    /* Remove contain on mobile as it may interfere with filter rendering */
+    contain: none;
+    /* Force higher quality rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

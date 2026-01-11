@@ -36,7 +36,7 @@ export default function CraftPage() {
           title: craftMetadata.shareTitle,
           text: craftMetadata.shareText,
         }}
-        extraSpacing={{ mobile: -16, desktop: 0 }}
+        extraSpacing={{ mobile: -48, desktop: 0 }}
       >
         {/* Single Image */}
         <div className="mt-0 sm:mt-16 w-full max-w-full">

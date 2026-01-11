@@ -65,7 +65,16 @@ export default function ElectricBorder() {
       <main className="main-container">
         <svg className="svg-container">
           <defs>
-            <filter ref={filterRef} id="ramin-electric-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+            {/* Desktop filter */}
+            <filter 
+              ref={filterRef} 
+              id="ramin-electric-displace" 
+              colorInterpolationFilters="sRGB" 
+              x="-20%" 
+              y="-20%" 
+              width="140%" 
+              height="140%"
+            >
               <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise1" seed="3" />
               <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
                 <animate 
@@ -112,6 +121,74 @@ export default function ElectricBorder() {
               </feOffset>
               <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
               <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+              <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+              <feDisplacementMap 
+                in="SourceGraphic" 
+                in2="combinedNoise" 
+                scale="30" 
+                xChannelSelector="R" 
+                yChannelSelector="B" 
+              />
+            </filter>
+            {/* Mobile filter - smoother with lower numOctaves */}
+            <filter 
+              id="ramin-electric-displace-mobile" 
+              colorInterpolationFilters="sRGB" 
+              x="-20%" 
+              y="-20%" 
+              width="140%" 
+              height="140%"
+            >
+              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="6" result="noise1" seed="3" />
+              <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+                <animate 
+                  attributeName="dy" 
+                  values="650; 0" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-1.8s" 
+                />
+              </feOffset>
+              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="6" result="noise2" seed="3" />
+              <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+                <animate 
+                  attributeName="dy" 
+                  values="0; -650" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-4.2s" 
+                />
+              </feOffset>
+              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="7" result="noise3" seed="5" />
+              <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
+                <animate 
+                  attributeName="dx" 
+                  values="520; 0" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-3s" 
+                />
+              </feOffset>
+              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="7" result="noise4" seed="5" />
+              <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
+                <animate 
+                  attributeName="dx" 
+                  values="0; -520" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-1.2s" 
+                />
+              </feOffset>
+              <feGaussianBlur in="offsetNoise1" stdDeviation="0.5" result="smoothNoise1" />
+              <feGaussianBlur in="offsetNoise2" stdDeviation="0.5" result="smoothNoise2" />
+              <feGaussianBlur in="offsetNoise3" stdDeviation="0.5" result="smoothNoise3" />
+              <feGaussianBlur in="offsetNoise4" stdDeviation="0.5" result="smoothNoise4" />
+              <feComposite in="smoothNoise1" in2="smoothNoise2" result="part1" />
+              <feComposite in="smoothNoise3" in2="smoothNoise4" result="part2" />
               <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
               <feDisplacementMap 
                 in="SourceGraphic" 
