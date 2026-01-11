@@ -52,7 +52,7 @@ export default function PhotoBoomPage() {
           title: photoboomMetadata.shareTitle,
           text: photoboomMetadata.shareText,
         }}
-        extraSpacing={{ mobile: -32, desktop: -16 }}
+        extraSpacing={{ mobile: -48, desktop: -24 }}
       >
         <PhotoBoom images={images} />
       </ProjectPageShell>
