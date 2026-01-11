@@ -239,11 +239,6 @@ const sectionVariants = {
   visible: { opacity: 1, filter: 'blur(0px)' },
 };
 
-const rowVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-};
-
 export default function CraftPage() {
   // Restore scroll position on mount - use useLayoutEffect to run before paint
   useLayoutEffect(() => {
@@ -353,17 +348,8 @@ export default function CraftPage() {
 
             <div className="space-y-1.5 sm:space-y-2 max-w-[560px] mx-auto">
               {sortedFragments.map((item, index) => (
-                <motion.div
+                <div
                   key={item.id}
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{
-                    type: 'tween',
-                    duration: 1.2,
-                    delay: 0.28 + index * 0.12,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
                   className="group rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 cursor-pointer bg-transparent hover:bg-[#E0DCD7] border border-transparent hover:border-[#D0CECA] shadow-none hover:shadow-sm transition-all duration-200"
                 >
                   <Link
@@ -386,7 +372,7 @@ export default function CraftPage() {
                       </p>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.section>
@@ -420,17 +406,8 @@ export default function CraftPage() {
 
             <div className="space-y-1.5 sm:space-y-2 max-w-[560px] mx-auto">
               {sortedProducts.map((item, index) => (
-                <motion.div
+                <div
                   key={item.id}
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{
-                    type: 'tween',
-                    duration: 1.2,
-                    delay: 0.36 + index * 0.12,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
                   className="group rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 cursor-pointer bg-transparent hover:bg-[#E0DCD7] border border-transparent hover:border-[#D0CECA] shadow-none hover:shadow-sm transition-all duration-200"
                 >
                   <Link
@@ -453,7 +430,7 @@ export default function CraftPage() {
                       </p>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.section>
@@ -487,17 +464,8 @@ export default function CraftPage() {
 
             <div className="space-y-1.5 sm:space-y-2 max-w-[560px] mx-auto">
               {sortedFilms.map((item, index) => (
-                <motion.div
+                <div
                   key={item.id}
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{
-                    type: 'tween',
-                    duration: 1.2,
-                    delay: 0.4 + index * 0.12,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
                   className="group rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 cursor-pointer bg-transparent hover:bg-[#E0DCD7] border border-transparent hover:border-[#D0CECA] shadow-none hover:shadow-sm transition-all duration-200"
                 >
                   <Link
@@ -520,7 +488,7 @@ export default function CraftPage() {
                       </p>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.section>
@@ -554,17 +522,8 @@ export default function CraftPage() {
 
             <div className="space-y-1.5 sm:space-y-2 max-w-[560px] mx-auto">
               {sortedEssays.map((item, index) => (
-                <motion.div
+                <div
                   key={item.id}
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{
-                    type: 'tween',
-                    duration: 1.2,
-                    delay: 0.42 + index * 0.12,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
                   className="group rounded-lg px-3.5 py-2.5 sm:px-4 sm:py-3 cursor-pointer bg-transparent hover:bg-[#E0DCD7] border border-transparent hover:border-[#D0CECA] shadow-none hover:shadow-sm transition-all duration-200"
                 >
                   <Link
@@ -587,7 +546,7 @@ export default function CraftPage() {
                       </p>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.section>
