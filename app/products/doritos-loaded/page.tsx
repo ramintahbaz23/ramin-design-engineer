@@ -150,9 +150,9 @@ export default function DoritosLoadedPage() {
         },
       ];
       
-      // Find the first image (SPLASH) and last image (Page_1) and separate them
+      // Find the first image (SPLASH) and second image (Page_1) and separate them
       const firstImage = items.find(item => item.src.includes('SPLASH.jpg'));
-      const lastImage = items.find(item => item.src.includes('Doritos_Loaded_VIS_FINAL copy_Page_1.png'));
+      const secondImage = items.find(item => item.src.includes('Doritos_Loaded_VIS_FINAL copy_Page_1.png'));
       const restOfItems = items.filter(
         item => !item.src.includes('SPLASH.jpg') && !item.src.includes('Doritos_Loaded_VIS_FINAL copy_Page_1.png')
       );
@@ -168,11 +168,11 @@ export default function DoritosLoadedPage() {
       // Sort by aspect ratio (taller items first - lower aspect ratio means taller)
       itemsWithRatios.sort((a, b) => a.aspectRatio - b.aspectRatio);
       
-      // Put first image (SPLASH) at the beginning, sorted rest in middle, last image (Page_1) at the end
+      // Put first image (SPLASH) at the beginning, second image (Page_1) in 2nd position, then sorted rest
       const sortedItems = [
         ...(firstImage ? [firstImage] : []),
+        ...(secondImage ? [secondImage] : []),
         ...itemsWithRatios.map(({ item }) => item),
-        ...(lastImage ? [lastImage] : []),
       ];
       
       setMediaItems(sortedItems);
@@ -320,25 +320,53 @@ export default function DoritosLoadedPage() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute inset-0"
+                  className={
+                    currentIndex === 2 || currentIndex === 3 || currentIndex === 4
+                      ? "absolute inset-0 flex items-center justify-center"
+                      : "absolute inset-0"
+                  }
                 >
                   {mediaItems[currentIndex].type === 'video' ? (
-                  <video
-                    src={mediaItems[currentIndex].src}
-                    className="w-full h-full object-contain"
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                  />
-                ) : (
-                  <Image
-                    src={mediaItems[currentIndex].src}
-                    alt={mediaItems[currentIndex].alt || 'Doritos Loaded'}
-                    fill
-                    className="object-contain"
-                  />
-                )}
+                    currentIndex === 2 || currentIndex === 3 || currentIndex === 4 ? (
+                      <div className="absolute inset-0 rounded-lg overflow-hidden bg-transparent">
+                        <video
+                          src={mediaItems[currentIndex].src}
+                          className="w-full h-full object-contain"
+                          muted
+                          loop
+                          playsInline
+                          autoPlay
+                        />
+                      </div>
+                    ) : (
+                      <video
+                        src={mediaItems[currentIndex].src}
+                        className="w-full h-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                        autoPlay
+                      />
+                    )
+                  ) : (
+                    currentIndex === 2 || currentIndex === 3 || currentIndex === 4 ? (
+                      <div className="absolute inset-0 rounded-lg overflow-hidden bg-transparent">
+                        <Image
+                          src={mediaItems[currentIndex].src}
+                          alt={mediaItems[currentIndex].alt || 'Doritos Loaded'}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <Image
+                        src={mediaItems[currentIndex].src}
+                        alt={mediaItems[currentIndex].alt || 'Doritos Loaded'}
+                        fill
+                        className="object-cover"
+                      />
+                    )
+                  )}
                 </motion.div>
               </AnimatePresence>
             )}

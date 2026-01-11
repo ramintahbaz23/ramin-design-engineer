@@ -217,7 +217,11 @@ export default function ThisTrackisCrackPage() {
                     src={mediaItems[currentIndex].src}
                     alt={mediaItems[currentIndex].alt || 'ThisTrackisCrack'}
                     fill
-                    className="object-cover"
+                    className={
+                      mediaItems[currentIndex].id === '1' || mediaItems[currentIndex].id === '2'
+                        ? 'object-contain'
+                        : 'object-cover'
+                    }
                   />
                 )}
               </motion.div>
@@ -225,7 +229,7 @@ export default function ThisTrackisCrackPage() {
 
             {/* Pagination dots - positioned over image */}
             <div 
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2"
+              className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2"
               style={{ zIndex: 30 }}
             >
               {mediaItems.map((item, index) => {

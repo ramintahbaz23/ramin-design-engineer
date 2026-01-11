@@ -228,7 +228,7 @@ export default function KeycadetsPage() {
                 {mediaItems[currentIndex].type === 'video' ? (
                   <video
                     src={mediaItems[currentIndex].src}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                     muted
                     loop
                     playsInline
@@ -239,7 +239,11 @@ export default function KeycadetsPage() {
                     src={mediaItems[currentIndex].src}
                     alt={mediaItems[currentIndex].alt || 'Keycadets'}
                     fill
-                    className="object-contain"
+                    className={
+                      mediaItems[currentIndex].id === '3' || mediaItems[currentIndex].id === '4'
+                        ? 'object-contain'
+                        : 'object-cover'
+                    }
                   />
                 )}
               </motion.div>
