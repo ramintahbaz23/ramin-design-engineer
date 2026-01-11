@@ -285,7 +285,7 @@ export default function CraftPage() {
           <div className="max-w-[680px] mx-auto">
           {/* Intro copy (no explicit page title text) */}
           <motion.section
-            className="mb-10 sm:mb-14 px-3.5 sm:px-4"
+            className="mb-10 sm:mb-14"
             variants={sectionVariants}
             initial="hidden"
             animate="visible"
@@ -354,7 +354,7 @@ export default function CraftPage() {
                 >
                   <Link
                     href={item.href ?? '#'}
-                    className="flex items-start gap-6 w-full"
+                    className="flex items-baseline gap-6 w-full"
                     aria-label={item.title}
                     onClick={handleLinkClick}
                   >
@@ -412,7 +412,7 @@ export default function CraftPage() {
                 >
                   <Link
                     href={item.href ?? '#'}
-                    className="flex items-start gap-6 w-full"
+                    className="flex items-baseline gap-6 w-full"
                     aria-label={item.title}
                     onClick={handleLinkClick}
                   >
@@ -470,7 +470,7 @@ export default function CraftPage() {
                 >
                   <Link
                     href={item.href ?? '#'}
-                    className="flex items-start gap-6 w-full"
+                    className="flex items-baseline gap-6 w-full"
                     aria-label={item.title}
                     onClick={handleLinkClick}
                   >
@@ -528,7 +528,7 @@ export default function CraftPage() {
                 >
                   <Link
                     href={item.href ?? '#'}
-                    className="flex items-start gap-6 w-full"
+                    className="flex items-baseline gap-6 w-full"
                     aria-label={item.title}
                     onClick={handleLinkClick}
                   >
@@ -577,7 +577,7 @@ export default function CraftPage() {
               </h2>
             </div>
 
-            <div className="px-3.5 sm:px-4 space-y-3 sm:space-y-4 text-[15px] sm:text-[16px] text-gray-700 leading-relaxed max-w-[560px] mx-auto">
+            <div className="space-y-3 sm:space-y-4 text-[15px] sm:text-[16px] text-gray-700 leading-relaxed max-w-[560px] mx-auto">
               <p>
                 If you want to see how I approach problems or go deeper on specific work,{' '}
                 <Link
