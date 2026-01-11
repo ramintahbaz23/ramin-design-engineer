@@ -9,7 +9,7 @@ export const craftMetadata = {
   title: 'Craft',
   date: 'July 2025',
   cardDate: 'Jul 2025',
-  cardDescription: 'Product description',
+  cardDescription: 'AI code preview with live refinement controls.',
   href: '/products/craft',
   shareTitle: 'Craft — Ramin — Design Engineer',
   shareText: 'Product description',
