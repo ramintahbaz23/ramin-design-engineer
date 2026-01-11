@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ElectricBorder.css';
 
 export default function ElectricBorder() {
@@ -9,6 +9,9 @@ export default function ElectricBorder() {
   const [chaos, setChaos] = useState(30);
   const [color, setColor] = useState('#FF00FF');
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Ref for the filter element to query animate elements
+  const filterRef = useRef<SVGFilterElement>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -27,32 +30,96 @@ export default function ElectricBorder() {
     document.documentElement.style.setProperty('--electric-border-rgb', `${r}, ${g}, ${b}`);
   }, [color]);
 
+  // Update animation speed via DOM manipulation instead of React re-renders
+  useEffect(() => {
+    if (filterRef.current) {
+      const animates = filterRef.current.querySelectorAll('animate');
+      if (animates.length >= 4) {
+        // Update dur attributes for all animations
+        animates[0].setAttribute('dur', `${speed}s`);
+        animates[1].setAttribute('dur', `${speed}s`);
+        animates[2].setAttribute('dur', `${speed}s`);
+        animates[3].setAttribute('dur', `${speed}s`);
+        
+        // Update begin attributes
+        animates[0].setAttribute('begin', `-${speed * 0.3}s`);
+        animates[1].setAttribute('begin', `-${speed * 0.7}s`);
+        animates[2].setAttribute('begin', `-${speed * 0.5}s`);
+        animates[3].setAttribute('begin', `-${speed * 0.2}s`);
+      }
+    }
+  }, [speed]);
+
+  // Update chaos (displacement scale) via DOM manipulation
+  useEffect(() => {
+    if (filterRef.current) {
+      const displacementMap = filterRef.current.querySelector('feDisplacementMap');
+      if (displacementMap) {
+        displacementMap.setAttribute('scale', String(chaos));
+      }
+    }
+  }, [chaos]);
+
   return (
     <div className="electric-border-wrapper">
       <main className="main-container">
         <svg className="svg-container">
           <defs>
-            <filter id="ramin-electric-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+            <filter ref={filterRef} id="ramin-electric-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
               <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise1" seed="3" />
               <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
-                <animate attributeName="dy" values="650; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.3}s`} />
+                <animate 
+                  attributeName="dy" 
+                  values="650; 0" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-1.8s" 
+                />
               </feOffset>
               <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise2" seed="3" />
               <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
-                <animate attributeName="dy" values="0; -650" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.7}s`} />
+                <animate 
+                  attributeName="dy" 
+                  values="0; -650" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-4.2s" 
+                />
               </feOffset>
               <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise3" seed="5" />
               <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
-                <animate attributeName="dx" values="520; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.5}s`} />
+                <animate 
+                  attributeName="dx" 
+                  values="520; 0" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-3s" 
+                />
               </feOffset>
               <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise4" seed="5" />
               <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
-                <animate attributeName="dx" values="0; -520" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.2}s`} />
+                <animate 
+                  attributeName="dx" 
+                  values="0; -520" 
+                  dur="6s" 
+                  repeatCount="indefinite" 
+                  calcMode="linear" 
+                  begin="-1.2s" 
+                />
               </feOffset>
               <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
               <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
               <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
-              <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={chaos} xChannelSelector="R" yChannelSelector="B" />
+              <feDisplacementMap 
+                in="SourceGraphic" 
+                in2="combinedNoise" 
+                scale="30" 
+                xChannelSelector="R" 
+                yChannelSelector="B" 
+              />
             </filter>
           </defs>
         </svg>
