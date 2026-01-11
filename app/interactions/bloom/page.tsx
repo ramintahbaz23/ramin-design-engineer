@@ -39,6 +39,7 @@ export default function BloomPage() {
           title: bloomMetadata.shareTitle,
           text: bloomMetadata.shareText,
         }}
+        extraSpacing={-16}
       >
         <div className="w-full max-w-[680px] mx-auto relative px-4 sm:px-0">
           <Bloom />

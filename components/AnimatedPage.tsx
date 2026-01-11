@@ -20,8 +20,19 @@ export default function AnimatedPage({ children, className, variant = 'default' 
     setMounted(true);
   }, []);
 
-  if (!mounted || prefersReducedMotion) {
+  if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
+  }
+
+  if (!mounted) {
+    return (
+      <div 
+        className={className}
+        style={{ opacity: 0, visibility: 'hidden' }}
+      >
+        {children}
+      </div>
+    );
   }
 
   const configs = {

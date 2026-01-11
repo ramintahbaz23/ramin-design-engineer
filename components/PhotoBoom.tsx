@@ -94,9 +94,9 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
     if (isMobile) {
       // Mobile: use fixed pixel offsets that work reliably across devices
       // Images are positioned at 50%, 50% (center), so transforms are relative to center
-      const offsetX = 80; // Horizontal spread
-      const offsetY = 80; // Vertical spread
-      const leftShift = -90; // Shift entire group left to center better on screen
+      const offsetX = 60; // Horizontal spread (reduced from 80 to keep on screen)
+      const offsetY = 60; // Vertical spread (reduced from 80 to keep on screen)
+      const leftShift = -70; // Shift entire group left to center better on screen (reduced from -90)
       
       // Corner positions: top-left, top-right, bottom-left, bottom-right
       // Add leftShift to all X positions to move the group left
@@ -208,8 +208,8 @@ export default function PhotoBoom({ images }: PhotoBoomProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[60vh] flex items-center justify-center"
-      style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible' }}
+      className="relative w-full h-[70vh] sm:h-[60vh] flex items-center justify-center"
+      style={{ overflow: 'visible', overflowX: 'visible', overflowY: 'visible', minHeight: isMobile ? '500px' : 'auto' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

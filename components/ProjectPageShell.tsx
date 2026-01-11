@@ -19,7 +19,7 @@ type ProjectPageShellProps = {
   backLabel?: string;
   shareConfig?: ShareConfig;
   children?: ReactNode;
-  extraSpacing?: number; // Additional spacing in px to add on top of calculated spacing
+  extraSpacing?: number | { mobile?: number; desktop?: number }; // Additional spacing in px to add on top of calculated spacing
 };
 
 export default function ProjectPageShell({
@@ -35,6 +35,7 @@ export default function ProjectPageShell({
   const router = useRouter();
   const textContentRef = useRef<HTMLDivElement>(null);
   const [spacing, setSpacing] = useState<number>(12); // Default spacing in px (desktop default)
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // If going back to craft page, save current scroll position (though we're leaving, not coming back)
@@ -76,16 +77,26 @@ export default function ProjectPageShell({
   const showShare = Boolean(shareConfig);
   const hasChildren = Boolean(children);
 
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Calculate dynamic spacing based on copy height
   useEffect(() => {
     if (!hasChildren || !textContentRef.current) return;
 
     const calculateSpacing = () => {
       const textHeight = textContentRef.current?.offsetHeight || 0;
-      const isMobile = window.innerWidth < 640;
+      const isMobileCheck = window.innerWidth < 640;
       
       // Base minimum spacing: 32px (mobile) / 8px (desktop) - very tight
-      const baseSpacing = isMobile ? 32 : 8;
+      const baseSpacing = isMobileCheck ? 32 : 8;
       
       // Ensure minimum spacing is maintained, but add more if copy is very tall
       // This prevents animation from touching copy while maintaining consistency
@@ -156,21 +167,28 @@ export default function ProjectPageShell({
           </div>
 
           {/* Optional children section for animation/interactive content */}
-          {children && (
-            <div 
-              className="flex items-start justify-center pb-28 sm:pb-32 w-full" 
-              style={{ 
-                overflow: 'visible', 
-                overflowX: 'visible', 
-                overflowY: 'visible', 
-                position: 'relative', 
-                zIndex: 1,
-                paddingTop: `${spacing + extraSpacing}px`
-              }}
-            >
-              {children}
-            </div>
-          )}
+          {children && (() => {
+            // Calculate responsive extraSpacing
+            const responsiveExtraSpacing = typeof extraSpacing === 'object' 
+              ? (isMobile ? (extraSpacing.mobile ?? 0) : (extraSpacing.desktop ?? 0))
+              : extraSpacing;
+            
+            return (
+              <div 
+                className="flex items-start justify-center pb-28 sm:pb-32 w-full" 
+                style={{ 
+                  overflow: 'visible', 
+                  overflowX: 'visible', 
+                  overflowY: 'visible', 
+                  position: 'relative', 
+                  zIndex: 1,
+                  paddingTop: `${spacing + responsiveExtraSpacing}px`
+                }}
+              >
+                {children}
+              </div>
+            );
+          })()}
         </div>
       </main>
     </div>

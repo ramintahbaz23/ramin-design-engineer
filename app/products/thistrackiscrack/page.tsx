@@ -177,12 +177,13 @@ export default function ThisTrackisCrackPage() {
           title: thisTrackisCrackMetadata.shareTitle,
           text: thisTrackisCrackMetadata.shareText,
         }}
+        extraSpacing={160}
       >
         <div className="w-full max-w-[680px] mx-auto relative px-4 sm:px-0">
           {/* Image container */}
           <div
             ref={imageContainerRef}
-            className={`relative w-full rounded-lg overflow-hidden mt-8 sm:mt-12 ${getCursorClass()}`}
+            className={`relative w-full rounded-lg overflow-hidden ${getCursorClass()}`}
             style={{
               width: '100%',
               height: '600px',
@@ -229,8 +230,7 @@ export default function ThisTrackisCrackPage() {
 
             {/* Pagination dots - positioned over image */}
             <div 
-              className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2"
-              style={{ zIndex: 30 }}
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 z-10"
             >
               {mediaItems.map((item, index) => {
                 const isActive = index === currentIndex;
@@ -250,8 +250,6 @@ export default function ThisTrackisCrackPage() {
                     style={{
                       minWidth: '8px',
                       minHeight: '8px',
-                      position: 'relative',
-                      zIndex: 30,
                     }}
                   />
                 );

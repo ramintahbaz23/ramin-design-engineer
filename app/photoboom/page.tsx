@@ -52,6 +52,7 @@ export default function PhotoBoomPage() {
           title: photoboomMetadata.shareTitle,
           text: photoboomMetadata.shareText,
         }}
+        extraSpacing={-16}
       >
         <PhotoBoom images={images} />
       </ProjectPageShell>

@@ -8,6 +8,16 @@ export default function ElectricBorder() {
   const [speed, setSpeed] = useState(6);
   const [chaos, setChaos] = useState(30);
   const [color, setColor] = useState('#FF00FF');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--electric-border-color', color);
@@ -23,22 +33,22 @@ export default function ElectricBorder() {
         <svg className="svg-container">
           <defs>
             <filter id="ramin-electric-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise1" seed="3" />
+              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves={isMobile ? "4" : "8"} result="noise1" seed="3" />
               <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
                 <animate attributeName="dy" values="650; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.3}s`} />
               </feOffset>
 
-              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise2" seed="3" />
+              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves={isMobile ? "4" : "8"} result="noise2" seed="3" />
               <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
                 <animate attributeName="dy" values="0; -650" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.7}s`} />
               </feOffset>
 
-              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise3" seed="5" />
+              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves={isMobile ? "5" : "9"} result="noise3" seed="5" />
               <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
                 <animate attributeName="dx" values="520; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.5}s`} />
               </feOffset>
 
-              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise4" seed="5" />
+              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves={isMobile ? "5" : "9"} result="noise4" seed="5" />
               <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
                 <animate attributeName="dx" values="0; -520" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.2}s`} />
               </feOffset>
@@ -47,7 +57,7 @@ export default function ElectricBorder() {
               <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
               <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
 
-              <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={chaos} xChannelSelector="R" yChannelSelector="B" />
+              <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={isMobile ? Math.min(chaos, 20) : chaos} xChannelSelector="R" yChannelSelector="B" />
             </filter>
           </defs>
         </svg>
@@ -117,12 +127,12 @@ export default function ElectricBorder() {
           <div className="border-outer">
             <div className="main-card"></div>
           </div>
-          <div className="glow-layer-1"></div>
-          <div className="glow-layer-2"></div>
+          {!isMobile && <div className="glow-layer-1"></div>}
+          {!isMobile && <div className="glow-layer-2"></div>}
         </div>
 
-        <div className="overlay-1"></div>
-        <div className="overlay-2"></div>
+        {!isMobile && <div className="overlay-1"></div>}
+        {!isMobile && <div className="overlay-2"></div>}
         <div className="background-glow"></div>
 
         <div className="content-container">

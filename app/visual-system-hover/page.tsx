@@ -67,7 +67,7 @@ export default function VisualSystemHoverPage() {
   const description = (
     <>
       <p className="mb-2 sm:mb-3">
-        An exploration of hover interactions within a bento-style grid layout, featuring visuals of my heroes. Each card responds to hover with subtle scale, opacity, and border transitions, creating a cohesive visual system that feels responsive and intentional.
+        An exploration of hover interactions within a bento-style grid layout, featuring visuals of my heroes. Each card responds to hover (on desktop) with subtle scale, opacity, and border transitions, creating a cohesive visual system that feels responsive and intentional.
       </p>
       <p className="mb-2 sm:mb-3">
         Built using Next.js, Framer Motion, and Tailwind CSS.
@@ -131,7 +131,7 @@ export default function VisualSystemHoverPage() {
           title: visualSystemHoverMetadata.shareTitle,
           text: visualSystemHoverMetadata.shareText,
         }}
-        extraSpacing={48}
+        extraSpacing={{ mobile: -16, desktop: 48 }}
       >
         {/* Grid - 2 columns, 3 rows */}
         <div className="w-full max-w-full">

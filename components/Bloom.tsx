@@ -20,7 +20,7 @@ export default function Bloom() {
   const menuItemStyles = "flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-neutral-900 hover:bg-neutral-100";
 
   return (
-    <div className="w-full flex flex-col items-center gap-48 min-h-[400px] pt-24 pb-8">
+    <div className="w-full flex flex-col items-center gap-24 sm:gap-48 min-h-[400px] pt-8 sm:pt-24 pb-8">
       <div className="flex items-center justify-center">
         <Menu.Root direction={expandDirection} anchor={alignment}>
           <Menu.Container

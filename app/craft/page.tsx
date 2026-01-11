@@ -285,7 +285,7 @@ export default function CraftPage() {
           <div className="max-w-[680px] mx-auto">
           {/* Intro copy (no explicit page title text) */}
           <motion.section
-            className="mb-10 sm:mb-14"
+            className="mb-14"
             variants={sectionVariants}
             initial="hidden"
             animate="visible"
