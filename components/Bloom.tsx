@@ -119,7 +119,7 @@ export default function Bloom() {
       </div>
 
       <div className="w-full flex flex-col items-center gap-6">
-        <div className="flex flex-wrap items-center gap-2 justify-center">
+        <div className="flex flex-nowrap sm:flex-wrap items-center gap-2 justify-center overflow-x-auto w-full">
           <div className="relative flex items-center gap-1 rounded-[24px] p-1" style={{ backgroundColor: '#E8E8E8' }}>
             <div 
               className="absolute w-8 h-8 bg-white rounded-full shadow-sm transition-transform duration-200 ease-out"

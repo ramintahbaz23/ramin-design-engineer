@@ -33,31 +33,45 @@ export default function ElectricBorder() {
         <svg className="svg-container">
           <defs>
             <filter id="ramin-electric-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves={isMobile ? "4" : "8"} result="noise1" seed="3" />
-              <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
-                <animate attributeName="dy" values="650; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.3}s`} />
-              </feOffset>
-
-              <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves={isMobile ? "4" : "8"} result="noise2" seed="3" />
-              <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
-                <animate attributeName="dy" values="0; -650" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.7}s`} />
-              </feOffset>
-
-              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves={isMobile ? "5" : "9"} result="noise3" seed="5" />
-              <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
-                <animate attributeName="dx" values="520; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.5}s`} />
-              </feOffset>
-
-              <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves={isMobile ? "5" : "9"} result="noise4" seed="5" />
-              <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
-                <animate attributeName="dx" values="0; -520" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.2}s`} />
-              </feOffset>
-
-              <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
-              <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
-              <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
-
-              <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={isMobile ? Math.min(chaos, 20) : chaos} xChannelSelector="R" yChannelSelector="B" />
+              {isMobile ? (
+                // Simplified mobile filter - fewer layers for better performance
+                <>
+                  <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise1" seed="3" />
+                  <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+                    <animate attributeName="dy" values="300; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.3}s`} />
+                  </feOffset>
+                  <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise2" seed="5" />
+                  <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+                    <animate attributeName="dx" values="250; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.5}s`} />
+                  </feOffset>
+                  <feComposite in="offsetNoise1" in2="offsetNoise2" result="combinedNoise" />
+                  <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={Math.min(chaos, 15)} xChannelSelector="R" yChannelSelector="B" />
+                </>
+              ) : (
+                // Full desktop filter
+                <>
+                  <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise1" seed="3" />
+                  <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+                    <animate attributeName="dy" values="650; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.3}s`} />
+                  </feOffset>
+                  <feTurbulence type="turbulence" baseFrequency="0.018" numOctaves="8" result="noise2" seed="3" />
+                  <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+                    <animate attributeName="dy" values="0; -650" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.7}s`} />
+                  </feOffset>
+                  <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise3" seed="5" />
+                  <feOffset in="noise3" dx="0" dy="0" result="offsetNoise3">
+                    <animate attributeName="dx" values="520; 0" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.5}s`} />
+                  </feOffset>
+                  <feTurbulence type="turbulence" baseFrequency="0.022" numOctaves="9" result="noise4" seed="5" />
+                  <feOffset in="noise4" dx="0" dy="0" result="offsetNoise4">
+                    <animate attributeName="dx" values="0; -520" dur={`${speed}s`} repeatCount="indefinite" calcMode="linear" begin={`-${speed * 0.2}s`} />
+                  </feOffset>
+                  <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+                  <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+                  <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+                  <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale={chaos} xChannelSelector="R" yChannelSelector="B" />
+                </>
+              )}
             </filter>
           </defs>
         </svg>

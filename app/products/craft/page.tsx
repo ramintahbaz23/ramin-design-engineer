@@ -38,7 +38,7 @@ export default function CraftPage() {
         }}
       >
         {/* Single Image */}
-        <div className="mt-12 sm:mt-16 w-full max-w-full">
+        <div className="mt-8 sm:mt-16 w-full max-w-full">
           <div className="relative w-full rounded-lg overflow-hidden" style={{ maxHeight: 'calc(100vh - 200px)', minHeight: '800px', backgroundColor: '#E2DEDB' }}>
             <Image
               src="/images/craft/Craft_new.png"

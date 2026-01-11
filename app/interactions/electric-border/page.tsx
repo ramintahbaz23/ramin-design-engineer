@@ -38,6 +38,7 @@ export default function ElectricBorderPage() {
             title: electricBorderMetadata.shareTitle,
             text: electricBorderMetadata.shareText,
           }}
+          extraSpacing={{ mobile: -16, desktop: 0 }}
         >
           <div className="w-full max-w-[680px] mx-auto relative px-4 sm:px-0">
             <ElectricBorder />
