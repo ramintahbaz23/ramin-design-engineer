@@ -28,9 +28,9 @@ export default function AnimatedPage({ children, className, variant = 'default' 
     default: {
       initial: { opacity: 0, y: 24, filter: 'blur(20px)' },
       animate: {
-        opacity: [0, 1, 1],
-        y: [24, 8, 0],
-        filter: ['blur(20px)', 'blur(8px)', 'blur(0px)'],
+        opacity: [0, 1, 1] as number[],
+        y: [24, 8, 0] as number[],
+        filter: ['blur(20px)', 'blur(8px)', 'blur(0px)'] as string[],
       },
       transition: {
         duration: 1.0,
@@ -53,7 +53,7 @@ export default function AnimatedPage({ children, className, variant = 'default' 
         filter: { duration: 1.4 },
       },
     },
-  } as const;
+  };
 
   const config = configs[variant] ?? configs.default;
 
