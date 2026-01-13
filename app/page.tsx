@@ -38,7 +38,7 @@ export default function Home() {
                   >
                     Promise
                   </Link>
-                  , designing intelligent systems that work for people.
+                  , designing intelligent financial systems that work for people.
                 </p>
               </div>
             </div>
