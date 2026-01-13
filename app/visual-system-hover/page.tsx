@@ -95,6 +95,38 @@ export default function VisualSystemHoverPage() {
     setHoveredCard(null); // Explicitly reset hover state on mount
   }, []);
 
+  // Preload metadata for all videos in the background for instant hover previews
+  useEffect(() => {
+    const preloadVideos: HTMLVideoElement[] = [];
+    
+    gridItems.forEach((item) => {
+      if (item.video) {
+        const video = document.createElement('video');
+        video.src = item.video;
+        video.preload = 'metadata'; // Only load metadata (first frame)
+        video.muted = true;
+        video.playsInline = true;
+        video.style.display = 'none';
+        video.style.position = 'absolute';
+        video.style.width = '1px';
+        video.style.height = '1px';
+        video.style.opacity = '0';
+        video.style.pointerEvents = 'none';
+        document.body.appendChild(video);
+        preloadVideos.push(video);
+      }
+    });
+
+    // Cleanup: remove preload videos when component unmounts
+    return () => {
+      preloadVideos.forEach((video) => {
+        if (video.parentNode) {
+          document.body.removeChild(video);
+        }
+      });
+    };
+  }, []);
+
   // Handle preview video setup when hover changes
   useEffect(() => {
     if (hoveredCard) {
@@ -240,14 +272,6 @@ export default function VisualSystemHoverPage() {
                       }`}
                     >
                       <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-black">
-                        {/* Loading message */}
-                        {previewVideoLoading[item.id] && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
-                            <p className="text-white text-[10px] sm:text-xs text-center px-2">
-                              loading...your internet is slow
-                            </p>
-                          </div>
-                        )}
                         {/* Video - 10 second clip */}
                         <video
                           ref={(el) => {
@@ -257,7 +281,7 @@ export default function VisualSystemHoverPage() {
                           autoPlay
                           muted
                           playsInline
-                          preload="auto"
+                          preload="metadata"
                           className="w-full h-full object-cover"
                           onLoadedData={() => {
                             setPreviewVideoLoading((prev) => ({ ...prev, [item.id]: false }));
@@ -447,12 +471,16 @@ export default function VisualSystemHoverPage() {
                     <div className="flex-1 relative overflow-hidden bg-black">
                       {selectedItem.video ? (
                         <>
-                          {/* Loading message */}
+                          {/* Loading animation */}
                           {modalVideoLoading[selectedItem.id] && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
-                              <p className="text-white text-sm text-center px-4">
-                                loading...your internet is slow
-                              </p>
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/90 z-20">
+                              <div className="flex flex-col items-center gap-3">
+                                {/* Spinner */}
+                                <div className="relative w-12 h-12">
+                                  <div className="absolute inset-0 border-2 border-white/20 rounded-full"></div>
+                                  <div className="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spin"></div>
+                                </div>
+                              </div>
                             </div>
                           )}
                           <video
