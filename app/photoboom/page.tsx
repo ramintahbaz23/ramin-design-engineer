@@ -32,7 +32,7 @@ export default function PhotoBoomPage() {
   const description = (
     <>
       <p className="mb-2 sm:mb-3">
-        An exploding image gallery that treats motion as rich feedback, responding instantly to touch and intent rather than clicks alone.
+        An exploding image gallery that treats motion as rich feedback, responding instantly to touch and intent rather than clicks alone. Featuring photos of some meaningful moments.
       </p>
       <p className="mb-2 sm:mb-3">
         Built using Next.js, Framer Motion, and Tailwind CSS.

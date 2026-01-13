@@ -28,14 +28,61 @@ type GridItem = {
   video?: string;
 };
 
+// Grid items - 2 columns, 2 rows, all same size
+const gridItems: GridItem[] = [
+  { 
+    id: '1', 
+    title: 'Michael Jordan Dunk Contest', 
+    subtitle: 'Nverse', 
+    year: '1987', 
+    category: 'BD',
+    bgColor: 'rgba(42, 42, 42, 0.5)', // Dark grey with more transparency
+    image: '/images/image1.jpeg',
+    video: '/videos/Michael_Jordan.mp4',
+  },
+  { 
+    id: '2', 
+    title: 'Steve Jobs iPhone unveiling', 
+    subtitle: 'Sodo', 
+    year: '2007', 
+    category: 'BD',
+    bgColor: 'rgba(58, 42, 26, 0.5)', // Dark brown with more transparency
+    image: '/images/image2.jpeg',
+    video: '/videos/Steve Jobs introduces iPhone in 2007.mp4',
+  },
+  { 
+    id: '3', 
+    title: 'Robin Williams (The Parkinson Show)', 
+    subtitle: 'Sodo Athletic Lab', 
+    year: '2001', 
+    category: 'WD',
+    bgColor: 'rgba(42, 42, 42, 0.5)',
+    image: '/images/image3.jpeg',
+    video: '/videos/Robin Williams.mp4',
+  },
+  { 
+    id: '4', 
+    title: 'Mr Rogers Emmy Speech', 
+    subtitle: 'MarsLofi', 
+    year: '1997', 
+    category: 'WD',
+    bgColor: 'rgba(42, 42, 42, 0.5)',
+    image: '/images/image4.jpeg',
+    video: '/videos/Fred Rogers.mp4',
+  },
+];
+
 export default function VisualSystemHoverPage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [previewVideoLoading, setPreviewVideoLoading] = useState<Record<string, boolean>>({});
+  const [modalVideoLoading, setModalVideoLoading] = useState<Record<string, boolean>>({});
   const modalRef = useRef<HTMLDivElement>(null);
   const resizeHandleRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previewVideoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
   
   const width = useMotionValue(400);
   const height = useMotionValue(300);
@@ -47,6 +94,39 @@ export default function VisualSystemHoverPage() {
     setIsMounted(true);
     setHoveredCard(null); // Explicitly reset hover state on mount
   }, []);
+
+  // Handle preview video setup when hover changes
+  useEffect(() => {
+    if (hoveredCard) {
+      const video = previewVideoRefs.current[hoveredCard];
+      if (video) {
+        setPreviewVideoLoading((prev) => ({ ...prev, [hoveredCard]: true }));
+        video.currentTime = 0;
+        video.play().catch(() => {
+          // Ignore play errors
+        });
+      }
+    } else {
+      // Reset all preview videos when hover ends
+      Object.values(previewVideoRefs.current).forEach((video) => {
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+  }, [hoveredCard]);
+
+  // Handle modal video setup when modal opens
+  useEffect(() => {
+    if (openModal && videoRef.current) {
+      setModalVideoLoading((prev) => ({ ...prev, [openModal]: true }));
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {
+        // Ignore play errors
+      });
+    }
+  }, [openModal]);
 
   // Reset position when modal closes
   useEffect(() => {
@@ -67,57 +147,13 @@ export default function VisualSystemHoverPage() {
   const description = (
     <>
       <p className="mb-2 sm:mb-3">
-        An exploration of hover interactions within a bento-style grid layout, featuring visuals of my heroes. Each card responds to hover (on desktop) with subtle scale, opacity, and border transitions, creating a cohesive visual system that feels responsive and intentional.
+        An exploration of hover interactions within a bento-style grid layout, featuring visuals of people who inspire me. Each card responds to hover (on desktop) with subtle scale, opacity, and border transitions, creating a cohesive visual system that feels responsive and intentional.
       </p>
       <p className="mb-2 sm:mb-3">
         Built using Next.js, Framer Motion, and Tailwind CSS.
       </p>
     </>
   );
-
-  // Grid items - 2 columns, 2 rows, all same size
-  const gridItems: GridItem[] = [
-    { 
-      id: '1', 
-      title: 'Michael Jordan Dunk Contest', 
-      subtitle: 'Nverse', 
-      year: '1987', 
-      category: 'BD',
-      bgColor: 'rgba(42, 42, 42, 0.5)', // Dark grey with more transparency
-      image: '/images/image1.jpeg',
-      video: '/videos/Michael_Jordan.mp4',
-    },
-    { 
-      id: '2', 
-      title: 'Steve Jobs iPhone unveiling', 
-      subtitle: 'Sodo', 
-      year: '2007', 
-      category: 'BD',
-      bgColor: 'rgba(58, 42, 26, 0.5)', // Dark brown with more transparency
-      image: '/images/image2.jpeg',
-      video: '/videos/Steve Jobs introduces iPhone in 2007.mp4',
-    },
-    { 
-      id: '3', 
-      title: 'Robin Williams (The Parkinson Show)', 
-      subtitle: 'Sodo Athletic Lab', 
-      year: '2001', 
-      category: 'WD',
-      bgColor: 'rgba(42, 42, 42, 0.5)',
-      image: '/images/image3.jpeg',
-      video: '/videos/Robin Williams.mp4',
-    },
-    { 
-      id: '4', 
-      title: 'Mr Rogers Emmy Speech', 
-      subtitle: 'MarsLofi', 
-      year: '1997', 
-      category: 'WD',
-      bgColor: 'rgba(42, 42, 42, 0.5)',
-      image: '/images/image4.jpeg',
-      video: '/videos/Fred Rogers.mp4',
-    },
-  ];
 
   return (
     <AnimatedPage variant="dramatic">
@@ -191,9 +227,9 @@ export default function VisualSystemHoverPage() {
                   transition={{ duration: 0.2 }}
                 />
                 
-                {/* Video/Image preview on hover - positioned outside card */}
+                {/* Video preview on hover - positioned outside card */}
                 <AnimatePresence>
-                  {hoveredCard === item.id && (
+                  {hoveredCard === item.id && item.video && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8, x: isLeftColumn ? 20 : -20 }}
                       animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -203,24 +239,54 @@ export default function VisualSystemHoverPage() {
                         isLeftColumn ? 'left-full ml-2' : 'right-full mr-2'
                       }`}
                     >
-                      <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden">
-                        {item.video ? (
-                          <video
-                            src={item.video}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            className="object-cover"
-                          />
+                      <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-lg overflow-hidden bg-black">
+                        {/* Loading message */}
+                        {previewVideoLoading[item.id] && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
+                            <p className="text-white text-[10px] sm:text-xs text-center px-2">
+                              loading...your internet is slow
+                            </p>
+                          </div>
                         )}
+                        {/* Video - 10 second clip */}
+                        <video
+                          ref={(el) => {
+                            previewVideoRefs.current[item.id] = el;
+                          }}
+                          src={item.video}
+                          autoPlay
+                          muted
+                          playsInline
+                          preload="auto"
+                          className="w-full h-full object-cover"
+                          onLoadedData={() => {
+                            setPreviewVideoLoading((prev) => ({ ...prev, [item.id]: false }));
+                            const video = previewVideoRefs.current[item.id];
+                            if (video) {
+                              video.currentTime = 0;
+                              video.play().catch(() => {
+                                // Ignore play errors
+                              });
+                            }
+                          }}
+                          onCanPlay={() => {
+                            setPreviewVideoLoading((prev) => ({ ...prev, [item.id]: false }));
+                          }}
+                          onWaiting={() => {
+                            setPreviewVideoLoading((prev) => ({ ...prev, [item.id]: true }));
+                          }}
+                          onTimeUpdate={(e) => {
+                            const video = e.currentTarget;
+                            // Stop at 10 seconds and reset to start
+                            if (video.currentTime >= 10) {
+                              video.pause();
+                              video.currentTime = 0;
+                              video.play().catch(() => {
+                                // Ignore play errors
+                              });
+                            }
+                          }}
+                        />
                       </div>
                     </motion.div>
                   )}
@@ -378,9 +444,17 @@ export default function VisualSystemHoverPage() {
                     </div>
 
                     {/* Content area */}
-                    <div className="flex-1 relative overflow-hidden">
+                    <div className="flex-1 relative overflow-hidden bg-black">
                       {selectedItem.video ? (
                         <>
+                          {/* Loading message */}
+                          {modalVideoLoading[selectedItem.id] && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20">
+                              <p className="text-white text-sm text-center px-4">
+                                loading...your internet is slow
+                              </p>
+                            </div>
+                          )}
                           <video
                             ref={videoRef}
                             src={selectedItem.video}
@@ -388,7 +462,17 @@ export default function VisualSystemHoverPage() {
                             loop
                             muted={isMuted}
                             playsInline
+                            preload="auto"
                             className="w-full h-full object-cover"
+                            onLoadedData={() => {
+                              setModalVideoLoading((prev) => ({ ...prev, [selectedItem.id]: false }));
+                            }}
+                            onCanPlay={() => {
+                              setModalVideoLoading((prev) => ({ ...prev, [selectedItem.id]: false }));
+                            }}
+                            onWaiting={() => {
+                              setModalVideoLoading((prev) => ({ ...prev, [selectedItem.id]: true }));
+                            }}
                           />
                           {/* Mute/Unmute toggle button */}
                           <button
