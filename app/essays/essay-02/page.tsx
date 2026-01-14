@@ -82,7 +82,7 @@ export default function Essay02() {
         backHref="/craft"
         backLabel="Craft"
         shareConfig={{
-          title: `${essay02Metadata.title} — Ramin — Design Engineer`,
+          title: `${essay02Metadata.title} — Ramin — Designer`,
           text: essay02Metadata.cardDescription,
         }}
       />

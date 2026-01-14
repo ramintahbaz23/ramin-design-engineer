@@ -11,7 +11,7 @@ export const film03Metadata = {
   cardDate: 'Nov 2013',
   cardDescription: 'A proximity-based dating app that breaks the ice.',
   href: '/films/film-03',
-  shareTitle: 'm8 Commercial — Ramin — Design Engineer',
+  shareTitle: 'm8 Commercial — Ramin — Designer',
   shareText: 'A commercial for m8, a proximity-based dating app that connects people in the same space to break the ice. I directed the production from development through post, handling story development, storyboarding, and editing.',
 };
 

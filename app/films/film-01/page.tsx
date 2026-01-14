@@ -11,7 +11,7 @@ export const film01Metadata = {
   cardDate: 'July 2025',
   cardDescription: "Recruiting video for Promise's engineering team.",
   href: '/films/film-01',
-  shareTitle: 'Engineering at Promise — Ramin — Design Engineer',
+  shareTitle: 'Engineering at Promise — Ramin — Designer',
   shareText: 'A recruiting video showcasing the engineering team and culture at Promise. I directed the production from development through post, handling story development, storyboarding, and editing.',
 };
 

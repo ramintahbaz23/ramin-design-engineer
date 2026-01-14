@@ -11,7 +11,7 @@ export const bloomMetadata = {
   cardDate: 'Jan 2026',
   cardDescription: 'iOS-inspired pull down menu.',
   href: '/interactions/bloom',
-  shareTitle: 'Bloom — Ramin — Design Engineer',
+  shareTitle: 'Bloom — Ramin — Designer',
   shareText: 'An iOS-inspired pull down menu for the web.',
 };
 

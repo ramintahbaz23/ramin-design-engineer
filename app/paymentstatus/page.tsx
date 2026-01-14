@@ -9,7 +9,7 @@ export const paymentStatusMetadata = {
   cardDate: 'Feb 2025',
   cardDescription: 'Clear visual feedback for payment processing.',
   href: '/paymentstatus',
-  shareTitle: 'Payment status — Ramin — Design Engineer',
+  shareTitle: 'Payment status — Ramin — Designer',
   shareText: 'A lifelike 2D player interaction exploring depth and motion.',
 };
 

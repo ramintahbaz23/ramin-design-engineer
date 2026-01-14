@@ -13,7 +13,7 @@ export const doritosLoadedMetadata = {
   cardDate: 'Jun 2023',
   cardDescription: 'End-to-end brand activation for Coachella.',
   href: '/products/doritos-loaded',
-  shareTitle: 'Doritos Loaded — Ramin — Design Engineer',
+  shareTitle: 'Doritos Loaded — Ramin — Designer',
   shareText: 'A full-scale brand activation for Doritos at Coachella, designing the end-to-end experience across digital and physical touchpoints.',
 };
 

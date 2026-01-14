@@ -10,7 +10,7 @@ export const photoboomMetadata = {
   cardDate: 'Mar 2025',
   cardDescription: 'An exploding image gallery interaction.',
   href: '/photoboom',
-  shareTitle: 'Photo boom — Ramin — Design Engineer',
+  shareTitle: 'Photo boom — Ramin — Designer',
   shareText: 'An exploding image gallery interaction exploring motion as feedback.',
 };
 

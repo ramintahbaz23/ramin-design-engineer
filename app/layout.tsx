@@ -21,7 +21,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ramin — Design Engineer",
+  title: "Ramin — Designer",
   description:
     "Designer who codes, working across product, film, hardware, and writing. Self-taught, learning by doing.",
   themeColor: "#E2DEDB",
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
     apple: '/icon.png',
   },
   openGraph: {
-    title: "Ramin — Design Engineer",
+    title: "Ramin — Designer",
     description:
       "Designer who codes, working across product, film, hardware, and writing. Self-taught, learning by doing.",
     url: "https://ramintahbaz.com",
-    siteName: "Ramin — Design Engineer",
+    siteName: "Ramin — Designer",
     images: [
       {
         url: "/images/share-og.png",
         width: 1200,
         height: 630,
-        alt: "Ramin — Design Engineer",
+        alt: "Ramin — Designer",
       },
     ],
     locale: "en_US",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ramin — Design Engineer",
+    title: "Ramin — Designer",
     description:
       "Designer who codes, working across product, film, hardware, and writing. Self-taught, learning by doing.",
     images: ["/images/share-og.png"],
@@ -64,7 +64,7 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Ramin",
-    "jobTitle": "Design Engineer",
+    "jobTitle": "Designer",
     "description": "Designer who codes, working across product, film, hardware, and writing. Self-taught, learning by doing.",
     "url": "https://ramintahbaz.com",
     "sameAs": [

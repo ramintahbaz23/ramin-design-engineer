@@ -12,7 +12,7 @@ export const electricBorderMetadata = {
   cardDate: 'Dec 2024',
   cardDescription: 'Animated border effect.',
   href: '/interactions/electric-border',
-  shareTitle: 'Electric border — Ramin — Design Engineer',
+  shareTitle: 'Electric border — Ramin — Designer',
   shareText: 'An animated border effect with turbulent displacement.',
 };
 

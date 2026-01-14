@@ -69,7 +69,7 @@ export default async function GearDetailPage({ params }: GearDetailPageProps) {
         backHref="/gear"
         backLabel="Gear"
         shareConfig={{
-          title: `${item.title} — Ramin — Design Engineer`,
+          title: `${item.title} — Ramin — Designer`,
           text: item.bodyText.substring(0, 100) + '...',
         }}
       >

@@ -11,7 +11,7 @@ export const film02Metadata = {
   cardDate: 'Nov 2016',
   cardDescription: 'An app that helps constituents track their government.',
   href: '/films/film-02',
-  shareTitle: 'FedCaddy Commercial — Ramin — Design Engineer',
+  shareTitle: 'FedCaddy Commercial — Ramin — Designer',
   shareText: 'A commercial for FedCaddy, an app that helps constituents track their government representatives and make their voices heard. I directed the production from development through post, handling story development, storyboarding, and editing.',
 };
 

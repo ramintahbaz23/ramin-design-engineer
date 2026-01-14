@@ -11,7 +11,7 @@ export const film04Metadata = {
   cardDate: 'Jun 2023',
   cardDescription: 'Zeke travels west to cast a coveted actress, but his plans unravel along the way.',
   href: '/films/film-04',
-  shareTitle: 'Zeke Sanders: Slice of Pie — Ramin — Design Engineer',
+  shareTitle: 'Zeke Sanders: Slice of Pie — Ramin — Designer',
   shareText: 'A visual essay on movement, rhythm, and the spaces between moments.',
 };
 

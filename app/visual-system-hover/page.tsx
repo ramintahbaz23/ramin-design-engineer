@@ -13,7 +13,7 @@ export const visualSystemHoverMetadata = {
   cardDate: 'Jan 2025',
   cardDescription: 'A bento-style grid exploring hover interactions and visual feedback.',
   href: '/visual-system-hover',
-  shareTitle: 'Visual system hover — Ramin — Design Engineer',
+  shareTitle: 'Visual system hover — Ramin — Designer',
   shareText: 'A bento-style grid exploring hover interactions and visual feedback.',
 };
 

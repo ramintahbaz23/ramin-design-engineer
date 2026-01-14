@@ -11,7 +11,7 @@ export const sunsetMetadata = {
   cardDate: 'Dec 2025',
   cardDescription: 'A location-aware concept that notifies users before sunset.',
   href: '/products/sunset',
-  shareTitle: 'Sunset Chaser — Ramin — Design Engineer',
+  shareTitle: 'Sunset Chaser — Ramin — Designer',
   shareText: 'A location-aware concept that notifies users before sunset.',
 };
 

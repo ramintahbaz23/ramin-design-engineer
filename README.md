@@ -1,4 +1,4 @@
-# Ramin  Design Engineer
+# Ramin  Designer
 
 A small portfolio built with Next.js, TypeScript, Framer Motion, and Tailwind CSS. It showcases interactive experiments, essays, and case-study intros, with **Photo boom** as the first featured interaction.
 

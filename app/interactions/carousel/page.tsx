@@ -12,7 +12,7 @@ export const carouselMetadata = {
   cardDate: 'Nov 2024',
   cardDescription: 'Horizontal scroll animation.',
   href: '/interactions/carousel',
-  shareTitle: 'Netflix film scroll — Ramin — Design Engineer',
+  shareTitle: 'Netflix film scroll — Ramin — Designer',
   shareText: 'A Netflix-style horizontal scroll animation featuring some of my favorite movies and shows.',
 };
 

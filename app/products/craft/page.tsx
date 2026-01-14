@@ -11,7 +11,7 @@ export const craftMetadata = {
   cardDate: 'Jul 2025',
   cardDescription: 'AI code preview with live refinement controls.',
   href: '/products/craft',
-  shareTitle: 'Craft — Ramin — Design Engineer',
+  shareTitle: 'Craft — Ramin — Designer',
   shareText: 'Product description',
 };
 

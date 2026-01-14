@@ -13,7 +13,7 @@ export const keycadetsMetadata = {
   cardDate: 'Jan 2019',
   cardDescription: 'Premium keyboard hardware company.',
   href: '/products/keycadets',
-  shareTitle: 'keycadets (acquired) — Ramin — Design Engineer',
+  shareTitle: 'keycadets (acquired) — Ramin — Designer',
   shareText: 'A premium mechanical keyboard peripheral company.',
 };
 

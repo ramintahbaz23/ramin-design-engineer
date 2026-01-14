@@ -13,7 +13,7 @@ export const thisTrackisCrackMetadata = {
   cardDate: 'Mar 2008',
   cardDescription: 'Music discovery site',
   href: '/products/thistrackiscrack',
-  shareTitle: 'this track is crack (acquired) — Ramin — Design Engineer',
+  shareTitle: 'this track is crack (acquired) — Ramin — Designer',
   shareText: 'Music discovery site',
 };
 

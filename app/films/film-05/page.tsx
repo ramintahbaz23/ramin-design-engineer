@@ -11,7 +11,7 @@ export const film05Metadata = {
   cardDate: 'Jun 2021',
   cardDescription: "The peaks and valleys of a young man's journey to make his first film.",
   href: '/films/film-05',
-  shareTitle: 'The Zeke Sanders Story — Ramin — Design Engineer',
+  shareTitle: 'The Zeke Sanders Story — Ramin — Designer',
   shareText: 'An abstract exploration of light, shadow, and the passage of time.',
 };
 
