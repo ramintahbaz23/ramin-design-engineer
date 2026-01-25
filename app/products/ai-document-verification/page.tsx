@@ -35,7 +35,7 @@ export default function AIDocumentVerificationPage() {
         An end-to-end product for scaling eligibility verification in government benefit programs. The system uses AI to extract and verify information from uploaded documents like utility bills, IDs, and award letters, automatically processing 94% of cases. Edge case reviews and corrections feed back into the model, continuously improving accuracy over time. Real-time validation reduces errors and eliminates redundant questions for residents.
       </p>
       <p className="mb-2 sm:mb-3">
-        Built in React, including the upload flow, extraction interface, review workflow, and guidance system.
+        Built with React 18, Node.js/Express, and Google Cloud Document AI. Includes upload flow, extraction interface, review workflow, and guidance system with real-time document processing.
       </p>
     </>
   );
@@ -61,7 +61,7 @@ export default function AIDocumentVerificationPage() {
             onClick={() => !isMobile && setIsModalOpen(true)}
           >
             <video
-              src="/images/ai-document-verification/new_demo.mp4"
+              src="/images/ai-document-verification/demo_ritl.mp4"
               className="w-full h-full object-contain rounded-lg"
               style={{ pointerEvents: 'none' }}
               muted
@@ -94,7 +94,7 @@ export default function AIDocumentVerificationPage() {
               >
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <video
-                    src="/images/ai-document-verification/new_demo.mp4"
+                    src="/images/ai-document-verification/demo_ritl.mp4"
                     className="w-full h-full object-contain rounded-lg"
                     muted
                     loop
