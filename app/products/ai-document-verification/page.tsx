@@ -61,7 +61,7 @@ export default function AIDocumentVerificationPage() {
             onClick={() => !isMobile && setIsModalOpen(true)}
           >
             <video
-              src="/images/ai-document-verification/ritle_demo1.mp4"
+              src="/images/ai-document-verification/new_demo.mp4"
               className="w-full h-full object-contain rounded-lg"
               style={{ pointerEvents: 'none' }}
               muted
@@ -94,7 +94,7 @@ export default function AIDocumentVerificationPage() {
               >
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <video
-                    src="/images/ai-document-verification/ritle_demo1.mp4"
+                    src="/images/ai-document-verification/new_demo.mp4"
                     className="w-full h-full object-contain rounded-lg"
                     muted
                     loop
