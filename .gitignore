@@ -40,3 +40,5 @@ next-env.d.ts
 public/videos/*.mp4
 public/videos/*.MOV
 public/videos/*.MP4
+# Exception: track Mr_Rogers.mp4
+!public/videos/Mr_Rogers.mp4

@@ -246,7 +246,9 @@ function parseDate(dateStr: string | undefined): number {
 
 // Sort arrays by date (most recent first)
 const sortedFragments = [...fragments].sort((a, b) => parseDate(b.date) - parseDate(a.date));
-const sortedProducts = [...products].sort((a, b) => parseDate(b.date) - parseDate(a.date));
+// Filter out any products with missing required fields before sorting
+const validProducts = products.filter(p => p.id && p.title && p.description);
+const sortedProducts = [...validProducts].sort((a, b) => parseDate(b.date) - parseDate(a.date));
 const sortedFilms = [...films].sort((a, b) => parseDate(b.date) - parseDate(a.date));
 const sortedEssays = [...essays].sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
@@ -256,6 +258,22 @@ const sectionVariants = {
 };
 
 export default function CraftPage() {
+  // Debug: Log products to verify AI Document Verification is included
+  useEffect(() => {
+    console.log('=== DEBUG: Products ===');
+    console.log('Products array:', products);
+    console.log('Sorted products:', sortedProducts);
+    console.log('AI Document Verification metadata:', aiDocumentVerificationMetadata);
+    console.log('Product count:', sortedProducts.length);
+    console.log('AI Doc Verification in array?', products.some(p => p.id === 'ai-document-verification'));
+    console.log('AI Doc Verification in sorted?', sortedProducts.some(p => p.id === 'ai-document-verification'));
+    if (aiDocumentVerificationMetadata) {
+      console.log('AI Doc Verification date:', aiDocumentVerificationMetadata.cardDate);
+      console.log('AI Doc Verification parsed date:', parseDate(aiDocumentVerificationMetadata.cardDate));
+    }
+    console.log('All product dates:', sortedProducts.map(p => ({ id: p.id, date: p.date, parsed: parseDate(p.date) })));
+  }, []);
+
   // Restore scroll position on mount - use useLayoutEffect to run before paint
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem('craftPageScrollPosition');
