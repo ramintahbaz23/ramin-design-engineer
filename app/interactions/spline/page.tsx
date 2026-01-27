@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AnimatedPage from '@/components/AnimatedPage';
 import ProjectPageShell from '@/components/ProjectPageShell';
 
@@ -17,38 +17,93 @@ export const splineMetadata = {
 
 export default function SplinePage() {
   const iframeContainerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Allow page scrolling when hovering over iframe
+  // Detect mobile and adjust quality
   useEffect(() => {
-    const container = iframeContainerRef.current;
-    if (!container) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      // Only allow vertical scrolling to pass through
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        // Check if we're at the top or bottom of the page
-        const isAtTop = window.scrollY === 0;
-        const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
-        
-        // If scrolling down at top or scrolling up at bottom, allow it
-        if ((e.deltaY > 0 && isAtTop) || (e.deltaY < 0 && isAtBottom)) {
-          return; // Let the iframe handle it
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 640;
+      setIsMobile(isMobileDevice);
+      
+      // Adjust iframe quality for mobile
+      if (iframeRef.current) {
+        const iframe = iframeRef.current;
+        // Force hardware acceleration and better rendering on mobile
+        if (isMobileDevice) {
+          iframe.style.imageRendering = 'crisp-edges';
+          iframe.style.WebkitImageRendering = 'crisp-edges';
         }
-        
-        // Otherwise, allow page scrolling
-        window.scrollBy(0, e.deltaY);
-        e.preventDefault();
       }
     };
 
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Allow page scrolling when hovering over iframe
+  useEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Always allow page scrolling when scrolling vertically
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        window.scrollBy({
+          top: e.deltaY,
+          behavior: 'auto'
+        });
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      // Allow touch scrolling to pass through
+      if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        const startY = touch.clientY;
+        const startScrollY = window.scrollY;
+
+        const handleTouchMove = (moveEvent: TouchEvent) => {
+          if (moveEvent.touches.length === 1) {
+            const currentY = moveEvent.touches[0].clientY;
+            const deltaY = startY - currentY;
+            window.scrollTo({
+              top: startScrollY + deltaY,
+              behavior: 'auto'
+            });
+            moveEvent.preventDefault();
+          }
+        };
+
+        const handleTouchEnd = () => {
+          document.removeEventListener('touchmove', handleTouchMove);
+          document.removeEventListener('touchend', handleTouchEnd);
+        };
+
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd);
+      }
+    };
+
+    // No need to handle mouse down since iframe is not interactive
+
+    overlay.addEventListener('wheel', handleWheel, { passive: false });
+    overlay.addEventListener('touchstart', handleTouchStart, { passive: false });
+
+    return () => {
+      overlay.removeEventListener('wheel', handleWheel);
+      overlay.removeEventListener('touchstart', handleTouchStart);
+    };
   }, []);
 
   const description = (
     <>
       <p className="mb-2 sm:mb-3">
-        A custom 3D brand asset that visualizes data flowing through Promise's product ecosystem. The undulating wave integrates running code streams and hidden ducks (the company's internal mascot), creating a layered visual identity that bridges technical systems with approachable character.
+        A custom 3D brand asset that visualizes data flowing through Promise's product ecosystem. The undulating wave integrates iridescent materials, running code streams, and hidden ducks (the company's internal mascot), creating a layered visual identity that bridges technical systems with approachable character.
       </p>
       <p className="mb-2 sm:mb-3">
         Built in Spline with custom materials, lighting, and animation curves.
@@ -78,7 +133,10 @@ export default function SplinePage() {
               overflow: 'hidden',
               transform: 'translateZ(0)',
               willChange: 'transform',
-              height: '600px',
+              height: isMobile ? '500px' : '600px',
+              WebkitTransform: 'translateZ(0)',
+              WebkitBackfaceVisibility: 'hidden',
+              backfaceVisibility: 'hidden',
             }}
           >
             {/* Top border/frame to create intentional boundary */}
@@ -86,19 +144,35 @@ export default function SplinePage() {
               className="absolute top-0 left-0 right-0 h-1 pointer-events-none z-10"
               style={{ borderRadius: '0.5rem', backgroundColor: '#0E1014' }}
             />
+            {/* Transparent overlay to capture scroll events while allowing clicks through */}
+            <div 
+              ref={overlayRef}
+              className="absolute inset-0 z-30"
+              style={{ 
+                pointerEvents: 'auto',
+                cursor: 'default',
+              }}
+            />
             <iframe
+              ref={iframeRef}
               src="https://my.spline.design/promise1-XHxvyba8ET1rLcT2QmEJJxu0/"
               title="Spline 3D Scene"
               className="w-full h-full"
               allow="fullscreen"
               style={{ 
                 border: 'none', 
-                transform: 'scale(1.6) translateY(15%)', 
+                transform: isMobile ? 'scale(1.4) translateY(15%)' : 'scale(1.6) translateY(15%)', 
                 transformOrigin: 'center',
-                imageRendering: '-webkit-optimize-contrast',
+                imageRendering: isMobile ? 'crisp-edges' : '-webkit-optimize-contrast',
                 willChange: 'transform',
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',
+                WebkitTransform: isMobile 
+                  ? 'scale3d(1.4, 1.4, 1) translate3d(0, 15%, 0)' 
+                  : 'scale3d(1.6, 1.6, 1) translate3d(0, 15%, 0)',
+                transformStyle: 'preserve-3d',
+                WebkitImageRendering: isMobile ? 'crisp-edges' : 'auto',
+                pointerEvents: 'none',
               }}
             />
             {/* Bottom border/frame to create intentional boundary */}
