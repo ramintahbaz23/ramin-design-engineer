@@ -60,43 +60,15 @@ export default function SplinePage() {
       }
     };
 
-    const handleTouchStart = (e: TouchEvent) => {
-      // Allow touch scrolling to pass through
-      if (e.touches.length === 1) {
-        const touch = e.touches[0];
-        const startY = touch.clientY;
-        const startScrollY = window.scrollY;
-
-        const handleTouchMove = (moveEvent: TouchEvent) => {
-          if (moveEvent.touches.length === 1) {
-            const currentY = moveEvent.touches[0].clientY;
-            const deltaY = startY - currentY;
-            window.scrollTo({
-              top: startScrollY + deltaY,
-              behavior: 'auto'
-            });
-            moveEvent.preventDefault();
-          }
-        };
-
-        const handleTouchEnd = () => {
-          document.removeEventListener('touchmove', handleTouchMove);
-          document.removeEventListener('touchend', handleTouchEnd);
-        };
-
-        document.addEventListener('touchmove', handleTouchMove, { passive: false });
-        document.addEventListener('touchend', handleTouchEnd);
-      }
-    };
+    // For mobile, we rely on touchAction: 'pan-y' CSS property for native scrolling
+    // No manual touch handling needed - the browser will handle it natively
 
     // No need to handle mouse down since iframe is not interactive
 
     overlay.addEventListener('wheel', handleWheel, { passive: false });
-    overlay.addEventListener('touchstart', handleTouchStart, { passive: false });
 
     return () => {
       overlay.removeEventListener('wheel', handleWheel);
-      overlay.removeEventListener('touchstart', handleTouchStart);
     };
   }, []);
 
@@ -133,10 +105,11 @@ export default function SplinePage() {
               overflow: 'hidden',
               transform: 'translateZ(0)',
               willChange: 'transform',
-              height: isMobile ? '500px' : '600px',
+              height: '600px',
               WebkitTransform: 'translateZ(0)',
               WebkitBackfaceVisibility: 'hidden',
               backfaceVisibility: 'hidden',
+              touchAction: 'pan-y',
             }}
           >
             {/* Top border/frame to create intentional boundary */}
@@ -151,6 +124,7 @@ export default function SplinePage() {
               style={{ 
                 pointerEvents: 'auto',
                 cursor: 'default',
+                touchAction: 'pan-y',
               }}
             />
             <iframe
@@ -161,17 +135,15 @@ export default function SplinePage() {
               allow="fullscreen"
               style={{ 
                 border: 'none', 
-                transform: isMobile ? 'scale(1.4) translateY(15%)' : 'scale(1.6) translateY(15%)', 
+                transform: 'scale(1.6) translateY(15%)', 
                 transformOrigin: 'center',
-                imageRendering: isMobile ? 'crisp-edges' : '-webkit-optimize-contrast',
+                imageRendering: '-webkit-optimize-contrast',
                 willChange: 'transform',
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',
-                WebkitTransform: isMobile 
-                  ? 'scale3d(1.4, 1.4, 1) translate3d(0, 15%, 0)' 
-                  : 'scale3d(1.6, 1.6, 1) translate3d(0, 15%, 0)',
+                WebkitTransform: 'scale3d(1.6, 1.6, 1) translate3d(0, 15%, 0)',
                 transformStyle: 'preserve-3d',
-                WebkitImageRendering: isMobile ? 'crisp-edges' : 'auto',
+                WebkitImageRendering: 'auto',
                 pointerEvents: 'none',
               }}
             />
