@@ -99,7 +99,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                     lineHeight: 1.5,
                   }}
                 >
-                  Design engineer at Promise.
+                  Design engineer at Atalanta.
                 </motion.p>
               )}
             </AnimatePresence>

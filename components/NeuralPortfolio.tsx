@@ -2786,7 +2786,7 @@ export default function NeuralPortfolio({ isLayerVisible = true, splashMode = fa
                 lineHeight: 1.7,
                 transition: 'opacity 0.4s ease',
               }}>
-                {categoryFilter === 'all' && `Building fintech interfaces and experimenting with the details that make software feel invisible. Design engineer at Promise.`}
+                {categoryFilter === 'all' && `Building fintech interfaces and experimenting with the details that make software feel invisible. Design engineer at Atalanta.`}
                 {categoryFilter === 'interaction' && `Interactions are the punctuation in a product. Easy to miss when they're right, impossible to ignore when they're off. The best ones feel like the interface already knew what you were going to do.`}
                 {categoryFilter === 'product' && `Good product stays quiet. It gets out of the way so the person using it feels capable. From idea to shipped, full ownership of every decision.`}
                 {categoryFilter === 'film' && `Film is just another way to control what someone feels and when. Swap a component for a lens, a transition for a cut. The problem is the same. Earn attention, hold it, leave the audience somewhere they didn't expect.`}
@@ -2816,7 +2816,7 @@ export default function NeuralPortfolio({ isLayerVisible = true, splashMode = fa
             lineHeight: 1.7,
             transition: 'opacity 0.4s ease',
           }}>
-            {categoryFilter === 'all' && `Building fintech interfaces and experimenting with the details that make software feel invisible. Design engineer at Promise.`}
+            {categoryFilter === 'all' && `Building fintech interfaces and experimenting with the details that make software feel invisible. Design engineer at Atalanta.`}
             {categoryFilter === 'interaction' && `Interactions are the punctuation in a product. Easy to miss when they're right, impossible to ignore when they're off. The best ones feel like the interface already knew what you were going to do.`}
             {categoryFilter === 'product' && `Good product stays quiet. It gets out of the way so the person using it feels capable. From idea to shipped, full ownership of every decision.`}
             {categoryFilter === 'film' && `Film is just another way to control what someone feels and when. Swap a component for a lens, a transition for a cut. The problem is the same. Earn attention, hold it, leave the audience somewhere they didn't expect.`}
