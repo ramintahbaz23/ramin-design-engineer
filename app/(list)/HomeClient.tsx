@@ -4,14 +4,12 @@ import { useEffect, useCallback } from 'react';
 import SplashScreen from '@/components/SplashScreen';
 import MobileVideoPreloader from '@/components/MobileVideoPreloader';
 import { useSplash } from '@/contexts/SplashContext';
+import { fetchLatestProfilePush } from '@/lib/github-activity';
 
 // Prefetch URLs (must match TopBar and GitHubCommitBadge)
 const DC_LAT = 38.9072;
 const DC_LON = -77.0369;
 const OPEN_METEO_URL = `https://api.open-meteo.com/v1/forecast?latitude=${DC_LAT}&longitude=${DC_LON}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`;
-const GITHUB_USERNAME = 'ramintahbaz23';
-const GITHUB_REPO = 'ramin-design-engineer';
-const COMMITS_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?per_page=1`;
 
 export const photoboomMetadata = {
   id: 'photoboom',
@@ -47,27 +45,10 @@ export default function HomeClient() {
         }
       })
       .catch(() => {});
-    fetch(COMMITS_URL)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((list) => {
-        const first = Array.isArray(list) && list[0];
-        if (!first) return;
-        const sha = (first.sha as string).slice(0, 7);
-        const date = (first.commit?.author?.date as string) || '';
-        return fetch(
-          `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits/${first.sha}`
-        )
-          .then((r) => (r.ok ? r.json() : null))
-          .then((commitData) => {
-            if (!commitData) return;
-            const stats = commitData.stats ?? {};
-            const additions = typeof stats.additions === 'number' ? stats.additions : 0;
-            const deletions = typeof stats.deletions === 'number' ? stats.deletions : 0;
-            sessionStorage.setItem(
-              'commit-cache',
-              JSON.stringify({ sha, date, additions, deletions })
-            );
-          });
+    fetchLatestProfilePush()
+      .then((commit) => {
+        if (!commit) return;
+        sessionStorage.setItem('commit-cache', JSON.stringify(commit));
       })
       .catch(() => {});
   }, [splashDone]);

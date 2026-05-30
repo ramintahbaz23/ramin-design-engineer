@@ -2,18 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useSplash } from '@/contexts/SplashContext';
-
-const GITHUB_USERNAME = 'ramintahbaz23';
-const GITHUB_REPO = 'ramin-design-engineer';
-const REPO_URL = `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO}`;
-const COMMITS_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits?per_page=1`;
-
-type CommitInfo = {
-  sha: string;
-  date: string;
-  additions: number;
-  deletions: number;
-};
+import {
+  fetchLatestProfilePush,
+  GITHUB_PROFILE_URL,
+  type CommitInfo,
+} from '@/lib/github-activity';
 
 function formatTimeAgo(isoDate: string): string {
   const d = new Date(isoDate);
@@ -60,34 +53,18 @@ export default function GitHubCommitBadge() {
 
     let cancelled = false;
 
-    async function fetchCommit() {
+    async function loadCommit() {
       try {
-        const listRes = await fetch(COMMITS_URL);
-        if (!listRes.ok) return;
-        const list = await listRes.json();
-        const first = Array.isArray(list) && list[0];
-        if (!first) return;
-        const sha = (first.sha as string).slice(0, 7);
-        const date = (first.commit?.author?.date as string) || '';
-
-        const commitRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/commits/${first.sha}`
-        );
-        if (!commitRes.ok) return;
-        const commitData = await commitRes.json();
-        const stats = commitData.stats ?? {};
-        const additions = typeof stats.additions === 'number' ? stats.additions : 0;
-        const deletions = typeof stats.deletions === 'number' ? stats.deletions : 0;
-
-        if (!cancelled) {
-          setInfo({ sha, date, additions, deletions });
+        const commit = await fetchLatestProfilePush();
+        if (!cancelled && commit) {
+          setInfo(commit);
         }
       } catch {
         if (!cancelled) setInfo(null);
       }
     }
 
-    fetchCommit();
+    loadCommit();
     return () => {
       cancelled = true;
     };
@@ -101,7 +78,7 @@ export default function GitHubCommitBadge() {
 
   return (
     <a
-      href={REPO_URL}
+      href={GITHUB_PROFILE_URL}
       target="_blank"
       rel="noopener noreferrer"
       style={{
